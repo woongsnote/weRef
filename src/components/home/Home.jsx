@@ -9,9 +9,16 @@ import { useNavigate } from "react-router-dom";
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 
+import axios from "axios";
 
 export default function Home() {
     const navigate = useNavigate()
+
+
+
+    axios.get("http://52.79.235.129/api/post").then(response=>{
+        console.log(response)
+    })
 
     const [loginCheck, setLoginCheck] = useState(true);
 

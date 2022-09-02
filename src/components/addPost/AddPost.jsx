@@ -17,15 +17,14 @@ export default function AddPost() {
 
 
     let data={
-        postId: 1,
         userId: 'yohan@naver.com',
         title:title,
         description:description,
         imgUrl:imgUrl,
         createAt:createAt,
         modifiedAt:'',
-        linkUrl:'https://google.com/',
-        likes:0
+        likes:0,
+        // url=[1,2,3,4,5]
     }
 
 
@@ -40,6 +39,8 @@ export default function AddPost() {
                     </div>
                     <div>
                         <TextField id="standard-basic" label="제목" variant="standard" />
+                        <TextField id="standard-basic" label="추천할 사이트 링크를 적어주세요!" variant="standard" />
+                        <TextField id="standard-basic" label="추천할 사이트 링크를 적어주세요!" variant="standard" />
                         <TextField id="standard-basic" label="추천할 사이트 링크를 적어주세요!" variant="standard" />
                     </div>
                 </div>
