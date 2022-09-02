@@ -1,5 +1,7 @@
 import React from "react";
 
+import { useNavigate } from "react-router-dom";
+
 import { 
     Button,
     ButtonGroup,
@@ -11,6 +13,9 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 
 export default function Header() {
+    const navigate = useNavigate()
+
+
     return(
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
@@ -26,8 +31,8 @@ export default function Header() {
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         WeReF
                     </Typography>
-                    <Button color="inherit">Login</Button>
-                    <Button color="inherit">SignUp</Button>
+                    <Button color="inherit" onClick={navigate('/login')}>Login</Button>
+                    <Button color="inherit" onClick={navigate('/signup')}>SignUp</Button>
                 </Toolbar>
             </AppBar>
         </Box>
