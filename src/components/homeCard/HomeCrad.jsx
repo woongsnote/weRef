@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
@@ -15,6 +16,35 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 
 
+const LikeIcon = () =>{
+    const [liked, setLiked] = useState(true);
+    const [likeNum, setLikeNum] = useState(1);
+
+    const btnPush =()=>{
+        if(liked === true){
+            setLikeNum(likeNum-1)
+            setLiked(false)
+        } else {
+            setLikeNum(likeNum+1)
+            setLiked(true)
+        }
+    }
+
+    if(liked === true){return(
+        <IconButton aria-label="add to favorites" 
+        onClick={btnPush}>
+            <FavoriteIcon/>
+            <span>{likeNum}</span>
+        </IconButton>
+    )}
+    if(liked === false){return(
+        <IconButton aria-label="add to favorites"
+        onClick={btnPush}>
+            <FavoriteBorderIcon/>
+            <span>{likeNum}</span>
+        </IconButton>
+    )}
+}
 
 
 export default function HomeCrad() {
@@ -24,7 +54,7 @@ export default function HomeCrad() {
             <Card sx={{ maxWidth: 345 }}>
             <CardHeader
                 avatar={
-                <Avatar sx={{ bgcolor: red[10] }} src="" />
+                <Avatar sx={{ bgcolor: red[10] }} src="img" />
                 }
                 title="닉네임"
                 subheader="September 14, 2016"
@@ -45,11 +75,8 @@ export default function HomeCrad() {
                 </Typography>
             </CardContent>
             <CardActions disableSpacing>
-                <IconButton aria-label="add to favorites">
-                <FavoriteBorderIcon />
-                <FavoriteIcon/>
-                <span>0</span>
-                </IconButton> 
+                {/* 좋아요버튼 컴포넌트 */}
+                <LikeIcon />
             </CardActions>
             </Card>
         </Grid>
