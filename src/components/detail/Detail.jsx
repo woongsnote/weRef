@@ -5,7 +5,6 @@ import { styled } from "@mui/material/styles";
 import {
   Box,
   Button,
-  FormControl,
   Link,
   Paper,
   Avatar,
@@ -15,9 +14,15 @@ import {
   CardActions,
   CardHeader,
   Input,
+  TextField,
 } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import AddBoxRoundedIcon from "@mui/icons-material/AddBoxRounded";
+import SaveRoundedIcon from "@mui/icons-material/SaveRounded";
+import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
+import EditRoundedIcon from "@mui/icons-material/EditRounded";
+import UndoRoundedIcon from "@mui/icons-material/UndoRounded";
+import FavoriteBorderRoundedIcon from "@mui/icons-material/FavoriteBorderRounded";
 import Image from "mui-image";
 
 import Header from "../header/Header";
@@ -34,6 +39,8 @@ const Detail = () => {
   const [comments, setComments] = useState([]);
 
   const [editMode, setEditMode] = useState(false);
+
+  const [comment, setComment] = useState();
 
   useEffect(() => {
     setTimeout(() => {
@@ -72,10 +79,10 @@ const Detail = () => {
       <Box>
         <h3>Reference List</h3>
 
-        {links.map((link, index) => {
+        {links.map(({ refUrl }, index) => {
           return (
             <LinkItem key={index}>
-              <Link href={link}>{link}</Link>
+              <Link href={refUrl}>{refUrl}</Link>
             </LinkItem>
           );
         })}
@@ -90,6 +97,8 @@ const Detail = () => {
         {/* 새 댓글 추가 */}
         <AddComment />
         {/* 가져온 댓글 목록 */}
+        {comments.length === 0 ? <Box>아직 댓글이 없어요</Box> : null}
+
         {comments.map((comment) => {
           return (
             <Comment
@@ -134,7 +143,7 @@ const Detail = () => {
                   }
                 }}
               >
-                {editMode ? "Save" : "Edit"}
+                {editMode ? <SaveRoundedIcon /> : <EditRoundedIcon />}
               </Button>
               <Button
                 onClick={() => {
@@ -142,7 +151,7 @@ const Detail = () => {
                   else console.log("delete");
                 }}
               >
-                {editMode ? "Cancel" : "Del"}
+                {editMode ? <UndoRoundedIcon /> : <DeleteRoundedIcon />}
               </Button>
             </>
           ) : null}
@@ -157,17 +166,22 @@ const Detail = () => {
       console.log("댓글 추가");
     };
 
+    const onChangeHandler = () => {
+      console.log(comment);
+    };
+
     return (
-      <FormControl>
-        <Card sx={{ display: "flex", flexDirection: "row" }}>
-          <Avatar></Avatar>
-          <Typography>{currentUserId}</Typography>
-          <Input></Input>
-          <Button>
-            <AddBoxRoundedIcon />
-          </Button>
-        </Card>
-      </FormControl>
+      <Card sx={{ display: "flex", flexDirection: "row" }}>
+        <CardHeader sx={{ flex: "1" }} avatar={<Avatar></Avatar>}></CardHeader>
+        <CardContent sx={{ flex: "8" }}>
+          <Typography fontWeight="bold">{currentUserId}</Typography>
+          <TextField fullWidth id="fullWidth" onChange={onChangeHandler} />
+        </CardContent>
+
+        <Button>
+          <AddBoxRoundedIcon />
+        </Button>
+      </Card>
     );
   };
 
@@ -185,15 +199,17 @@ const Detail = () => {
             <Item>
               <Image src={data.imageUrl} alt="description" />
             </Item>
+            <FavoriteBorderRoundedIcon />
+            {data.likes} likes
           </Grid>
           <Grid item xs={8}>
             <Item>
               <h2>{data.title}</h2>
-              <p>{data.description}</p>
             </Item>
             <RefList />
           </Grid>
         </Grid>
+        <Item>{data.description}</Item>
       </Box>
       <CommentList />
     </>
