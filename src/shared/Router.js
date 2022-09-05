@@ -6,6 +6,7 @@ import Login from "../components/login/Login";
 import SignUp from "../components/signup/SignUp";
 
 import Detail from "../pages/Detail";
+import EditPost from "../components/editPost/EditPost";
 
 import { auth } from "./firebase";
 import { onAuthStateChanged } from "firebase/auth";
@@ -36,7 +37,8 @@ const Router = () => {
         <Route path="/addPost" element={<AddPost />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/detail" element={<Detail />} />
+        <Route path="/detail/:id" element={<Detail />} />
+        <Route path="/editPost/:id" element={<EditPost />} />
       </Routes>
     </BrowserRouter>
   );

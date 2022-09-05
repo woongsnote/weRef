@@ -1,13 +1,13 @@
 import React from "react";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 
 import Header from "../header/Header";
-import AddPostStyle from "./AddPostStyle.css";
 
 import axios from "axios";
 import { postPosts } from "../../redux/modules/post";
+import { getEachPosts } from "../../redux/modules/post";
 import { getPosts } from "../../redux/modules/post";
 
 import TextField from "@mui/material/TextField";
@@ -19,6 +19,7 @@ const AddLinks = () => {
   const [refLinks, setRefLinks] = useState([]);
   const [inputText, setInputText] = useState("");
   const [nextId, setNextId] = useState(1);
+
 
   const handleChange = (e) => setInputText(e.target.value);
   const handleClick = () => {
@@ -67,14 +68,21 @@ const AddLinks = () => {
   );
 };
 
-export default function AddPost() {
+export default function EditPost() {
   const navigate = useNavigate();
+  const param = useParams();
   const dispatch = useDispatch();
 
   const [userId, setUserId] = useState("yohan@naver.com");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [imgUrl, setImgUrl] = useState([]);
+
+  const data = useSelector((state) => state.post.posts);
+  useEffect(() => {
+    dispatch(getEachPosts(param.id));
+  }, [dispatch]);
+  console.log(data)
 
   const titleHandle = (e) => {
     setTitle(e.target.value);
@@ -107,17 +115,16 @@ export default function AddPost() {
 
   let refUrl = [];
 
-  let data = {
+  let newData = {
     userId: userId,
     title: title,
     description: description,
-    author: "author",
     imgUrl: "",
     likes: 0,
     refUrl: refUrl,
   };
 
-  const addPost = () => {
+  const eidtPost = () => {
     if (title === "" || description === "") {
       alert("제목/내용을 적어주세요!");
     } else {
@@ -146,8 +153,7 @@ export default function AddPost() {
         }
       }
 
-      dispatch(postPosts(data));
-      dispatch(getPosts());
+      dispatch(postPosts(newData));
       navigate("/");
     }
   };
@@ -174,7 +180,7 @@ export default function AddPost() {
                 fileChange(e.target.files[0]);
               }}
             />
-            <img src={imgView}  />
+            <img src={imgView} />
             <span onClick={deleteImg}>제거</span>
           </div>
           <div className="linkUrls">
@@ -190,16 +196,18 @@ export default function AddPost() {
             variant="outlined"
             inputProps={{ maxLength: 50 }}
             onChange={titleHandle}
+            defaultValue={title}
           />
           <br />
           <br />
           <TextField
             id="description"
-            label="내용을 입력해주세요!"
-            placeholder="Placeholder"
+            label=""
+            placeholder=""
             multiline
             inputProps={{ maxLength: 300 }}
             onChange={descriptionHandle}
+            defaultValue={description}
           />
         </div>
 
@@ -207,8 +215,8 @@ export default function AddPost() {
           <Button onClick={goBack} variant="contained">
             뒤로가기
           </Button>
-          <Button variant="contained" onClick={addPost}>
-            저장하기
+          <Button variant="contained" onClick={eidtPost}>
+            수정하기
           </Button>
         </div>
       </form>
