@@ -12,7 +12,7 @@ const Router = () => {
 
   const [is_login, setIsLogin] = React.useState(false);
 
-  console.log(auth.currentUser);
+  // console.log(auth.currentUser);
 
   const loginCheck = async (user) => {
     if (user) {

@@ -38,4 +38,7 @@ const SignUpView = () => {
   );
 };
 
+export const id_ref = "id_ref"
+export const pw_ref = "pw_ref"
+
 export default SignUpView;
