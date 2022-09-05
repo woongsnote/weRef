@@ -7,7 +7,7 @@ import Header from "../header/Header";
 
 import axios from "axios";
 import { postPosts } from "../../redux/modules/post";
-import { getEachPosts } from "../../redux/modules/post";
+import { eachPosts } from "../../redux/modules/post";
 import { getPosts } from "../../redux/modules/post";
 
 import TextField from "@mui/material/TextField";
@@ -80,7 +80,7 @@ export default function EditPost() {
 
   const data = useSelector((state) => state.post.posts);
   useEffect(() => {
-    dispatch(getEachPosts(param.id));
+    dispatch(eachPosts(param.id));
   }, [dispatch]);
   console.log(data)
 

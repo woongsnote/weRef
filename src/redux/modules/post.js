@@ -26,8 +26,8 @@ export const getPosts = createAsyncThunk(
 );
 
 // [GET - 특정ID를 가진 데이터만 조회]
-export const getEachPosts = createAsyncThunk(
-  "GET_EACH_POSTS",
+export const eachPosts = createAsyncThunk(
+  "EACH_POSTS",
   async (payload, thunkAPI) => {
     try {
       const { data } = await axios.get(
@@ -102,14 +102,20 @@ export const postsSlice = createSlice({
     [getPosts.pending]: (state, action) => {
       state.isLoading = true;
     },
-    [getEachPosts.pending]: (state, action) => {
+    [eachPosts.pending]: (state, action) => {
       state.isLoading = true;
     },
+    
     /* Fulfilled */
     [getPosts.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.posts = action.payload;
       console.log("[posts 전체 데이터 조회]", state.posts);
+    },
+    [eachPosts.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.todos = [action.payload];
+      console.log("[POST 개별 데이터 조회]", state.posts);
     },
     [deletePosts.fulfilled]: (state, action) => {
       state.isLoading = false;
@@ -125,6 +131,10 @@ export const postsSlice = createSlice({
     },
     /* Rejected */
     [getPosts.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    [eachPosts.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },
