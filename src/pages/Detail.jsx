@@ -21,7 +21,7 @@ const Detail = () => {
   //받아온 댓글 상태 관리
   const [comments, setComments] = useState([]);
 
-  const test = apis.getDetail(1);
+  const test = apis.getDetail(3);
   console.log(test);
 
   useEffect(() => {

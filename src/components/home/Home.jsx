@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 
 import Header from "../header/Header";
-import HomeCrad from "../homeCard/HomeCrad";
+import HomeCard from "../homeCard/HomeCard";
 
 import { Button } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
@@ -32,11 +32,11 @@ export default function Home() {
       </Button>
       <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={3} columns={16}>
-          <HomeCrad />
-          <HomeCrad />
-          <HomeCrad />
-          <HomeCrad />
-          <HomeCrad />
+          <HomeCard />
+          <HomeCard />
+          <HomeCard />
+          <HomeCard />
+          <HomeCard />
         </Grid>
       </Box>
     </>

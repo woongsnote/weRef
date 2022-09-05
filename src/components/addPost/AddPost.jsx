@@ -7,8 +7,9 @@ import Header from "../header/Header";
 import AddPostStyle from "./AddPostStyle.css";
 
 import axios from "axios";
-import { postPosts } from "../../redux/modules/post";
-import { getPosts } from "../../redux/modules/post";
+// import { postPosts } from "../../redux/modules/post";
+// import { getPosts } from "../../redux/modules/post";
+import { getPosts, postPosts } from "../../redux/modules/posts";
 
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -174,7 +175,7 @@ export default function AddPost() {
                 fileChange(e.target.files[0]);
               }}
             />
-            <img src={imgView}  />
+            <img src={imgView} />
             <span onClick={deleteImg}>제거</span>
           </div>
           <div className="linkUrls">

@@ -45,14 +45,6 @@ export const RESP = {
         writer: "tester2",
         comment: "test중입니다.2",
       },
-      {
-        writer: "tester3",
-        comment: "test중입니다.3",
-      },
-      {
-        writer: "tester4",
-        comment: "test중입니다.4",
-      },
     ],
   },
 };

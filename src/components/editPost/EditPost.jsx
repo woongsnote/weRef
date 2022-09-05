@@ -6,9 +6,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import Header from "../header/Header";
 
 import axios from "axios";
-import { postPosts } from "../../redux/modules/post";
-import { getEachPosts } from "../../redux/modules/post";
-import { getPosts } from "../../redux/modules/post";
+import { postPosts } from "../../redux/modules/posts";
+import { getEachPosts } from "../../redux/modules/posts";
+import { getPosts } from "../../redux/modules/posts";
 
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -19,7 +19,6 @@ const AddLinks = () => {
   const [refLinks, setRefLinks] = useState([]);
   const [inputText, setInputText] = useState("");
   const [nextId, setNextId] = useState(1);
-
 
   const handleChange = (e) => setInputText(e.target.value);
   const handleClick = () => {
@@ -82,7 +81,7 @@ export default function EditPost() {
   useEffect(() => {
     dispatch(getEachPosts(param.id));
   }, [dispatch]);
-  console.log(data)
+  console.log(data);
 
   const titleHandle = (e) => {
     setTitle(e.target.value);

@@ -47,22 +47,22 @@ const LikeIcon = (props) => {
   }
 };
 
-export {LikeIcon}
+export { LikeIcon };
 
-export default function HomeCrad(props) {
+export default function HomeCard(props) {
   console.log(props.title);
   console.log(props.likes);
   // console.log(props.title)
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const goDetail =()=>{
-    navigate(`/detail/${props.id}`)
-  }
+  const goDetail = () => {
+    navigate(`/posts/${props.id}`);
+  };
 
   return (
     <Grid item xs={4}>
-      <Card sx={{ maxWidth: 345 }} id="goDetail" >
+      <Card sx={{ maxWidth: 345 }} id="goDetail">
         <div onClick={goDetail}>
           <CardHeader
             avatar={<Avatar sx={{ bgcolor: red[10] }} src="img" />}

@@ -1,5 +1,5 @@
 import { Box, Avatar, Typography, Input } from "@mui/material";
-// import AddBoxRoundedIcon from "@mui/icons-material/AddBoxRounded";
+import AddBoxRoundedIcon from "@mui/icons-material/AddBoxRounded";
 import useInput from "../../hooks/useInput";
 import { useState } from "react";
 import { apis } from "../../shared/api";
@@ -73,10 +73,11 @@ const AddComment = ({ setComments, comments, currentUserId, postId }) => {
               backgroundColor: "white",
               border: "none",
               cursor: "pointer",
+              color: "#1976d2",
             }}
           >
             {/* <AddBoxRoundedIcon /> */}
-            {isLoading ? "추가 중..." : "추가하기"}
+            {isLoading ? "추가 중..." : <AddBoxRoundedIcon />}
           </button>
         </Box>
       </form>
