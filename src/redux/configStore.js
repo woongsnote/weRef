@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import users from "./modules/users";
 import comments from "./modules/comments";
-import post from "./modules/post";
+import posts from "./modules/posts";
 import heart from "./modules/heart";
 import post from "./modules/post";
 

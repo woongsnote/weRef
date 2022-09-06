@@ -42,7 +42,7 @@ export default function Home() {
       <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={3} columns={16}>
           {reverse.map((item) => (
-            <HomeCrad
+            <HomeCard
               key={item.id}
               id={item.id}
               title={item.title}
