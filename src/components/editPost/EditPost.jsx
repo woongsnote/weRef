@@ -6,14 +6,14 @@ import { useNavigate, useParams } from "react-router-dom";
 import Header from "../header/Header";
 
 import axios from "axios";
-import { postPosts } from "../../redux/modules/post";
-import { eachPosts } from "../../redux/modules/post";
+
 import { getPosts } from "../../redux/modules/post";
+import { updatePosts } from "../../redux/modules/post";
 
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import CloseIcon from "@mui/icons-material/Close";
-import { AltRoute } from "@mui/icons-material";
+
 
 const AddLinks = () => {
   const [refLinks, setRefLinks] = useState([]);
@@ -80,15 +80,21 @@ export default function EditPost() {
 
   const data = useSelector((state) => state.post.posts);
   useEffect(() => {
-    dispatch(eachPosts(param.id));
+    dispatch(getPosts());
   }, [dispatch]);
-  console.log(data)
+  
+  console.log(data[param.id-1])
+
+
+
 
   const titleHandle = (e) => {
     setTitle(e.target.value);
+    console.log(title)
   };
   const descriptionHandle = (e) => {
     setDescription(e.target.value);
+    console.log(description)
   };
 
   // 이미지 미리보기
@@ -120,8 +126,9 @@ export default function EditPost() {
     title: title,
     description: description,
     imgUrl: "",
-    likes: 0,
+    heartCnt: 0,
     refUrl: refUrl,
+    id:param.id
   };
 
   const eidtPost = () => {
@@ -153,7 +160,9 @@ export default function EditPost() {
         }
       }
 
-      dispatch(postPosts(newData));
+
+      dispatch(updatePosts(newData));
+      dispatch(getPosts());
       navigate("/");
     }
   };

@@ -113,7 +113,7 @@ export default function AddPost() {
     description: description,
     author: "author",
     imgUrl: "",
-    likes: 0,
+    heartCnt: 0,
     refUrl: refUrl,
   };
 

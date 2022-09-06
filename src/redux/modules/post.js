@@ -72,7 +72,7 @@ export const deletePosts = createAsyncThunk(
 );
 
 // [UPDATE]
-export const updatatePosts = createAsyncThunk(
+export const updatePosts = createAsyncThunk(
   "UPDATAE_POSTS",
   async (payload, thunkAPI) => {
     try {
@@ -110,18 +110,16 @@ export const postsSlice = createSlice({
     [getPosts.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.posts = action.payload;
-      console.log("[posts 전체 데이터 조회]", state.posts);
     },
     [eachPosts.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.todos = [action.payload];
-      console.log("[POST 개별 데이터 조회]", state.posts);
     },
     [deletePosts.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.posts = state.posts.filter((item) => item.id !== action.payload);
     },
-    [updatatePosts.fulfilled]: (state, action) => {
+    [updatePosts.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.posts = state.posts.map((item) =>
         item.id === action.id

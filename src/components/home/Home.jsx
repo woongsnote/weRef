@@ -48,7 +48,7 @@ export default function Home() {
               title={item.title}
               description={item.description}
               author={item.author}
-              likes={item.likes}
+              heartCnt={item.heartCnt}
               refUrl={item.refUrl}
             />
           ))}

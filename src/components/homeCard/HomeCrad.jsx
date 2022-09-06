@@ -7,25 +7,61 @@ import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
 import Avatar from "@mui/material/Avatar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
+import CardActions from "@mui/material/CardActions";
+import IconButton from "@mui/material/IconButton";  
 import { red } from "@mui/material/colors";
+import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { useDispatch, useSelector } from "react-redux";
+import { updatePosts } from "../../redux/modules/post";
+import { updateHeart, addHeart, deleteHeart } from "../../redux/modules/heart";
+
+import { useEffect } from "react";
 
 const LikeIcon = (props) => {
+  const dispatch = useDispatch();
+
   const [liked, setLiked] = useState(false);
-  const [likeNum, setLikeNum] = useState(1);
+  const [likeNum, setLikeNum] = useState(0);
+
+  const data = useSelector((state) => state.post.posts);
+  const newData = [...data].filter((item) => item.id === props.id)[0];
+
+  useEffect(() => {
+    setLikeNum(newData.heartCnt);
+  }, []);
 
   const btnPush = () => {
-    if (liked === true) {
-      setLikeNum(likeNum - 1);
-      setLiked(false);
-    } else {
-      setLikeNum(likeNum + 1);
+    let putData = {
+      userId: newData.userId,
+      title: newData.title,
+      description: newData.description,
+      author: newData.author,
+      imgUrl: newData.imgUrl,
+      createAt: newData.createAt,
+      modifiedAt: newData.modifiedAt,
+      heartCnt: likeNum,
+      id: newData.id,
+    };
+    let postHeart = {
+      userId: "userId",
+      id: newData.id,
+    }
+
+    if (liked === false) {
       setLiked(true);
+      setLikeNum(likeNum + 1);
+      putData.heartCnt = likeNum + 1;
+      dispatch(updatePosts(putData));
+      dispatch(addHeart(postHeart));
+    } else {
+      setLiked(false);
+      setLikeNum(likeNum - 1);
+      putData.heartCnt = likeNum - 1;
+      dispatch(updatePosts(putData));
+      dispatch(deleteHeart())
     }
   };
 
@@ -33,7 +69,7 @@ const LikeIcon = (props) => {
     return (
       <IconButton aria-label="add to favorites" onClick={btnPush}>
         <FavoriteIcon />
-        <span>{props.likes}</span>
+        <span>{likeNum}</span>
       </IconButton>
     );
   }
@@ -41,31 +77,26 @@ const LikeIcon = (props) => {
     return (
       <IconButton aria-label="add to favorites" onClick={btnPush}>
         <FavoriteBorderIcon />
-        <span>{props.likes}</span>
+        <span>{likeNum}</span>
       </IconButton>
     );
   }
 };
-
-export {LikeIcon}
+export { LikeIcon };
 
 export default function HomeCrad(props) {
-  console.log(props.title);
-  console.log(props.likes);
-  // console.log(props.title)
+  const navigate = useNavigate();
 
-  const navigate = useNavigate()
-
-  const goDetail =()=>{
-    navigate(`/detail/${props.id}`)
-  }
+  const goDetail = () => {
+    navigate(`/detail/${props.id}`);
+  };
 
   return (
     <Grid item xs={4}>
-      <Card sx={{ maxWidth: 345 }} id="goDetail" >
+      <Card sx={{ maxWidth: 345 }} id="goDetail">
         <div onClick={goDetail}>
           <CardHeader
-            avatar={<Avatar sx={{ bgcolor: red[10] }} src="img" />}
+            // avatar={<Avatar sx={{ bgcolor: red[10] }} src="img" />}
             title={props.author}
             subheader="September 14, 2016"
           />
@@ -73,7 +104,11 @@ export default function HomeCrad(props) {
           <CardMedia
             component="img"
             height="150"
-            image="/static/images/cards/paella.jpg"
+            image={
+              props.imgUrl === undefined
+                ? require("../../image/WEREF_empty_img.png")
+                : props.imgUrl
+            }
           />
           <CardContent>
             <Typography variant="body2" color="text.secondary">
@@ -84,7 +119,7 @@ export default function HomeCrad(props) {
         </div>
         <CardActions disableSpacing>
           {/* 좋아요버튼 컴포넌트 */}
-          <LikeIcon likes={props.likes} />
+          <LikeIcon id={props.id} heartCnt={props.heartCnt} />
         </CardActions>
       </Card>
     </Grid>
