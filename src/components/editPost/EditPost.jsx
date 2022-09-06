@@ -7,8 +7,8 @@ import Header from "../header/Header";
 
 import axios from "axios";
 
-import { getPosts } from "../../redux/modules/post";
-import { updatePosts } from "../../redux/modules/post";
+import { getPosts } from "../../redux/modules/posts";
+import { updatePosts } from "../../redux/modules/posts";
 
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";

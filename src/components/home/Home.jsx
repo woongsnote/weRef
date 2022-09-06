@@ -12,7 +12,7 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 
 import axios from "axios";
-import { getPosts } from "../../redux/modules/post";
+import { getPosts } from "../../redux/modules/posts";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -22,8 +22,8 @@ export default function Home() {
     dispatch(getPosts());
   }, [dispatch]);
 
-  const data = useSelector((state) => state.post.posts);
-  const reverse = [...data].reverse();
+  // const data = useSelector((state) => state.post.posts);
+  // const reverse = [...data].reverse();
   // axios.get("http://52.79.235.129/api/post");
   // console.log(axios.get("http://52.79.235.129/api/post"));
 
@@ -40,7 +40,7 @@ export default function Home() {
         글쓰기
       </Button>
       <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={3} columns={16}>
+        {/* <Grid container spacing={3} columns={16}>
           {reverse.map((item) => (
             <HomeCard
               key={item.id}
@@ -52,7 +52,7 @@ export default function Home() {
               refUrl={item.refUrl}
             />
           ))}
-        </Grid>
+        </Grid> */}
       </Box>
     </>
   );

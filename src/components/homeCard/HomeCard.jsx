@@ -15,7 +15,7 @@ import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { useDispatch, useSelector } from "react-redux";
-import { updatePosts } from "../../redux/modules/post";
+import { updatePosts } from "../../redux/modules/posts";
 import { updateHeart, addHeart, deleteHeart } from "../../redux/modules/heart";
 
 import { useEffect } from "react";
