@@ -14,9 +14,9 @@ import axios from "axios";
 export default function Home() {
   const navigate = useNavigate();
 
-  axios.get("http://52.79.235.129/api/post").then((response) => {
-    console.log(response);
-  });
+  // axios.get("http://52.79.235.129/api/post").then((response) => {
+  //   console.log(response);
+  // });
 
   const [loginCheck, setLoginCheck] = useState(true);
 

@@ -7,7 +7,7 @@ import AddBoxRoundedIcon from "@mui/icons-material/AddBoxRounded";
 
 import useInput from "../../hooks/useInput";
 
-const AddComment = ({ setComments, comments, currentUserId, postId }) => {
+const AddComment = ({ currentUserId, postId }) => {
   const dispatch = useDispatch();
   //커스텀 훅(useInput) 사용
   const [comment, onChangeCommentHandler, commentReset] = useInput();
@@ -30,7 +30,7 @@ const AddComment = ({ setComments, comments, currentUserId, postId }) => {
         username: currentUserId,
         comment: comment,
       };
-
+      console.log(data);
       // const { data } = await apis.addComment();
       dispatch(addComment(data));
 

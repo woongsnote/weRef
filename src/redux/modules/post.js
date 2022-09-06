@@ -10,8 +10,8 @@ const initialState = {
 export const getPost = createAsyncThunk("getPost", async (args, thunkAPI) => {
   try {
     const { data } = await apis.post(args);
-    console.log(data.data);
-    return thunkAPI.fulfillWithValue(data.data);
+    return thunkAPI.fulfillWithValue(data.data); //서버 통신
+    // return thunkAPI.fulfillWithValue(data);
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
   }
@@ -31,7 +31,7 @@ export const postSlice = createSlice({
     },
     [getPost.rejected]: (state, action) => {
       state.isLoading = false;
-      state.post = action.payload;
+      state.error = action.payload;
     },
   },
 });

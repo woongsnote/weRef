@@ -8,6 +8,7 @@ import { Box, Link } from "@mui/material";
 import Header from "../components/header/Header";
 import DetailContent from "../components/detail/DetailContent";
 import CommentList from "../components/comments/CommentList";
+import { getComments } from "../redux/modules/comments";
 
 // import { RESP } from "../shared/response";
 
@@ -16,8 +17,10 @@ const Detail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { post } = useSelector((state) => state.post);
+  // const { commentList } = useSelector((state) => state.comments);
   //로그인한 사용자 ID(임시값)
   const currentUserId = "sang1";
+  // const currentUserId = "";
   //데이터 가져오는 동안 로딩 처리
   const [isLoading, setLoading] = useState(true);
   //받아온 데이터 상태관리
@@ -27,6 +30,7 @@ const Detail = () => {
 
   useEffect(() => {
     dispatch(getPost(id));
+    dispatch(getComments(id));
 
     setTimeout(() => {
       // setComments(RESP.COMMENTS.result);
@@ -34,7 +38,7 @@ const Detail = () => {
       // setData(post);
       setLoading(false);
     }, 1000);
-  }, [dispatch, id]);
+  }, []);
   // console.log(post);
   // console.log(data);
   // const links = data.referenceList;
@@ -82,7 +86,11 @@ const Detail = () => {
         likes={post.cntHeart}
         links={post.referenceList}
       />
-      <CommentList currentUserId={currentUserId} comments={post.commentList} />
+      <CommentList
+        currentUserId={currentUserId}
+        // comments={commentList}
+        postId={id}
+      />
     </>
   );
 };

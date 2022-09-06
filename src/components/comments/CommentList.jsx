@@ -2,23 +2,34 @@
 import { Box } from "@mui/material";
 import AddComment from "./AddComment";
 import Comment from "./Comment";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getComments } from "../../redux/modules/comments";
+const CommentList = ({ postId, currentUserId }) => {
+  const dispatch = useDispatch();
 
-const CommentList = ({ comments, postId, currentUserId }) => {
-  // const currentUserId = "";
+  useEffect(() => {
+    dispatch(getComments(postId));
+  }, [dispatch, postId]);
+
+  const { commentList } = useSelector((state) => state.comments);
+  // console.log(commentList)
+
   return (
     <Box sx={{ border: "1px solid #eee" }} m={2} p={3} borderRadius={2}>
       {/* 새 댓글 추가 */}
       <AddComment currentUserId={currentUserId} postId={postId} />
       {/* 가져온 댓글 목록 */}
-      {comments.length === 0 ? <Box>아직 댓글이 없어요</Box> : null}
+      {commentList.length === 0 ? <Box>아직 댓글이 없어요</Box> : null}
 
-      {comments.map((comment) => {
+      {commentList.map((comment) => {
         return (
           <Comment
             key={comment.id}
             author={comment.username}
-            content={comment.comment}
+            comment={comment.comment}
             currentUserId={currentUserId}
+            id={comment.id}
           />
         );
       })}
