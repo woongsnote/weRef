@@ -1,17 +1,23 @@
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addComment } from "../../redux/modules/comments";
+
 import { Box, Avatar, Typography, Input } from "@mui/material";
 import AddBoxRoundedIcon from "@mui/icons-material/AddBoxRounded";
+
 import useInput from "../../hooks/useInput";
-import { useState } from "react";
-import { apis } from "../../shared/api";
 
 const AddComment = ({ setComments, comments, currentUserId, postId }) => {
+  const dispatch = useDispatch();
   //커스텀 훅(useInput) 사용
   const [comment, onChangeCommentHandler, commentReset] = useInput();
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  const onSubmitCommentHandler = async (event) => {
+  /**댓글 추가 */
+  const onSubmitCommentHandler = (event) => {
+    //새로고침 방지
     event.preventDefault();
 
     try {
@@ -19,11 +25,19 @@ const AddComment = ({ setComments, comments, currentUserId, postId }) => {
 
       setIsLoading(true);
 
-      const { data } = await apis.addComment();
+      const data = {
+        post: postId,
+        username: currentUserId,
+        comment: comment,
+      };
 
-      setComments([...comments, data]);
+      // const { data } = await apis.addComment();
+      dispatch(addComment(data));
+
+      // setComments([...comments, data]);
     } catch (error) {
       setError(error);
+
       console.log(error);
     } finally {
       setIsLoading(false);
@@ -76,7 +90,6 @@ const AddComment = ({ setComments, comments, currentUserId, postId }) => {
               color: "#1976d2",
             }}
           >
-            {/* <AddBoxRoundedIcon /> */}
             {isLoading ? "추가 중..." : <AddBoxRoundedIcon />}
           </button>
         </Box>

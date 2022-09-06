@@ -7,16 +7,44 @@ const initialState = {
   error: null,
 };
 
+/**Create Comment */
+export const addComment = createAsyncThunk(
+  "addComment",
+  async (args, thunkAPI) => {
+    try {
+    } catch {}
+  }
+);
+
+/**Read Comments */
 export const getComments = createAsyncThunk(
   "getComments",
   async (args, thunkAPI) => {
     try {
-      // const { data } = await api.get("/comments", args);
-      // console.log(data);
+      const { data } = await apis.get("/comments", args);
+      console.log(data);
       return thunkAPI.fulfillWithValue();
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
+  }
+);
+
+/**Update Comment */
+export const updateComment = createAsyncThunk(
+  "updateComment",
+  async (args, thunkAPI) => {
+    try {
+    } catch {}
+  }
+);
+
+/**Delete Comment */
+export const deleteComment = createAsyncThunk(
+  "deleteComment",
+  async (args, thunkAPI) => {
+    try {
+    } catch {}
   }
 );
 
@@ -38,3 +66,5 @@ export const commentsSlice = createSlice({
     },
   },
 });
+
+export default commentsSlice.reducer;

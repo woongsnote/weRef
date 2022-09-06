@@ -57,7 +57,8 @@ export default function HomeCard(props) {
   const navigate = useNavigate();
 
   const goDetail = () => {
-    navigate(`/posts/${props.id}`);
+    // navigate(`/posts/${props.id}`);
+    navigate(`/posts/2`);
   };
 
   return (

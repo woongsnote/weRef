@@ -1,41 +1,43 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getPost } from "../redux/modules/post";
 
 import { Box, Link } from "@mui/material";
 
 import Header from "../components/header/Header";
+import DetailContent from "../components/detail/DetailContent";
 import CommentList from "../components/comments/CommentList";
 
-import { RESP } from "../shared/response";
-import DetailContent from "../components/detail/DetailContent";
-
-import { apis } from "../shared/api";
+// import { RESP } from "../shared/response";
 
 const Detail = () => {
+  const dispatch = useDispatch();
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const { post } = useSelector((state) => state.post);
   //로그인한 사용자 ID(임시값)
-  const currentUserId = "";
+  const currentUserId = "sang1";
   //데이터 가져오는 동안 로딩 처리
   const [isLoading, setLoading] = useState(true);
   //받아온 데이터 상태관리
-  const [data, setData] = useState({});
+  // const [data, setData] = useState();
   //받아온 댓글 상태 관리
-  const [comments, setComments] = useState([]);
-
-  const test = apis.getDetail(3);
-  console.log(test);
+  // const [comments, setComments] = useState([]);
 
   useEffect(() => {
+    dispatch(getPost(id));
+
     setTimeout(() => {
+      // setComments(RESP.COMMENTS.result);
+
+      // setData(post);
       setLoading(false);
-      setData(RESP.DETAIL.result);
-      setComments(RESP.COMMENTS.result);
     }, 1000);
-  }, []);
-
-  const navigate = useNavigate();
-
-  const links = data.urlLink;
-
+  }, [dispatch, id]);
+  // console.log(post);
+  // console.log(data);
+  // const links = data.referenceList;
   /** 수정하기 버튼 -로그인해야 표시 */
   const EditButton = () => {
     return (
@@ -69,18 +71,18 @@ const Detail = () => {
           justifyContent: "flex-end",
         }}
       >
-        {currentUserId === data.writer ? <EditButton /> : null}
+        {currentUserId === post.author ? <EditButton /> : null}
       </Box>
 
       {/* 작성한 내용 표시 */}
       <DetailContent
-        title={data.title}
-        imageUrl={data.imageUrl}
-        description={data.description}
-        likes={data.likes}
-        links={links}
+        title={post.title}
+        imageUrl={post.imgUrl}
+        description={post.description}
+        likes={post.cntHeart}
+        links={post.referenceList}
       />
-      <CommentList comments={comments} />
+      <CommentList currentUserId={currentUserId} comments={post.commentList} />
     </>
   );
 };
