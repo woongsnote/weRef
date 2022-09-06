@@ -1,15 +1,10 @@
 import React from "react";
-// import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../shared/firebase";
 import { loginUserThunk } from "../../redux/modules/users";
 import { useDispatch } from 'react-redux';
-import { id_ref, pw_ref } from "../signup/SignUpView";
 import { useState } from "react";
 
 
 export default function Login() {
-    const id_ref = React.useRef();
-    const pw_ref = React.useRef();
     const dispatch = useDispatch()
     const [user_ID, setuser_ID] = useState({
       user_ID: "",
@@ -18,15 +13,13 @@ export default function Login() {
       user_PW: "",
     });
 
-    // console.log(user_ID.user_ID)
 
-    const loginFB = async () => {
-      // const response = await dispatch(createUserThunk(newUser));
-        const data = await dispatch(
-          loginUserThunk([{
+    const loginFB =  () => {
+        dispatch(
+          loginUserThunk({
           email: user_ID.user_ID,
           password: user_PW.user_PW
-          }])
+          })
         ); 
     };
 

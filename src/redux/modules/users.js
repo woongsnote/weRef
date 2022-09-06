@@ -1,7 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-// import {removeCookie, setCookie} from "../../shared/Cookie";
 import { generateJWTToken } from "../../utils/JWT";
 
 // const API_USERS_URL = "https://everytodo.herokuapp.com/users";
@@ -19,35 +17,31 @@ const initialState = {
 
 
 export const createUserThunk = createAsyncThunk(
-    "users/createUser",
-    async (newUser, thunk) => {
+    "users/createUserThunk",
+    async (newUser, thunkAPI) => {
         try {
-            await axios.post(API_USERS_URL, newUser);
-            const token = generateJWTToken(newUser.email);
+            const data = await axios.post("https://localhost:3001/users", newUser);
+            // const token = generateJWTToken(newUser.email);
             // setCookie("access_token", token);
-            return thunk.fulfillWithValue("Signup succeeded.");
+            return thunkAPI.fulfillWithValue(data);
         } catch (error) {
-            return thunk.rejectWithValue(error);
+            return thunkAPI.rejectWithValue(error);
         }
     }
 );
 
 export const loginUserThunk = createAsyncThunk(
-  "users/findUser",
+  "user/findUser",
   async (userInfo, thunk) => {
+      console.log("test")
       try {
-          const { data } = await axios.get(
-              // `${API_USERS_URL}?email=${userInfo.email}`
-              `${API_USERS_URL}/${userInfo}`,
-            console.log(`${API_USERS_URL}/${userInfo}`),
-            console.log(`${userInfo}`)
-
-              );
+          const { data } = await 
+          axios.get('http://localhost:3001/user', userInfo)
           const user = data[0];
+          console.log(data)
           if (user) {
               if (user.password === userInfo.password) {
                   const token = generateJWTToken(user.email);
-                  // setCookie("access_token", token);
                   return thunk.fulfillWithValue("Login succeeded.");
               } else {
                   return thunk.rejectWithValue("Incorrect password.");
@@ -61,25 +55,20 @@ export const loginUserThunk = createAsyncThunk(
   }
 );
 
-const userSlice = createSlice({
+const usersSlice = createSlice({
     name: "users",
     initialState,
     reducers: {},
-    extraReducers: (builder) => {
+    extraReducers: {
 
-        builder
-            .addCase(createUserThunk.pending, (state) => {
-                state.isLoading = true;
-            })
-            .addCase(createUserThunk.fulfilled, (state) => {
-                state.isLoading = false;
-            })
-            .addCase(createUserThunk.rejected, (state, action) => {
-                state.isLoading = false;
-                state.error = action.payload;
-            });
+      [createUserThunk.fulfilled]: (state, action) => {
+        state.isLoading = false;
+        state.users.push(action.payload);
+      },
+      
+    },
 
-    }
 });
 
-export default userSlice.reducer;
+export const {} = usersSlice.actions;
+export default usersSlice.reducer;
