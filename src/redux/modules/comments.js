@@ -27,7 +27,6 @@ export const getComments = createAsyncThunk(
   async (args, thunkAPI) => {
     try {
       const { data } = await apis.getComments(args);
-      // console.log(data.data.commentlist);
       return thunkAPI.fulfillWithValue(data.data.commentlist);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

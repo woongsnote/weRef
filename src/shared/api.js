@@ -9,20 +9,32 @@ const api = axios.create({ baseURL: baseURL });
 // axios.defaults.withCredentials = true;
 
 export const apis = {
-  //posts
-  //posts: () => api.get(`/posts`),
+  // 1. local(db.json)
   //detail
   // post: (postId) => api.get(`/posts/${postId}`),
-  post: (id) => api.get(`/api/auth/post/${id}`),
-  //comment
-  addComment: (postId, content) => api.post(`/comments`, postId, { content }),
-  // getComments: (id) => api.get(`/api/posts/${id}/comments`),
-  getComments: (postId) => api.get(`/api/auth/comment/${postId}`),
+  // comment add
+  // addComment: (postId, content) => api.post(`/comments`, postId, { content }),
+  // comments get
   // getComments: () => api.get(`/comments`),
+  // comment delete
+  // api.delete(`comments/${commentId}`),
 
-  delComment: (commentId) => api.delete(`comments/${commentId}`),
-  // api.delete(`/api/posts/${postId}/comments/${commentId}`),
-  editComment: (commentId, content) =>
-    // api.put(`/api/posts/${postId}/comments/${commentId}`, { content }),
-    api.patch(`/comments/${commentId}`, { content }),
+  // comment update
+  // api.patch(`/comments/${commentId}`, { content }),
+
+  // 2. server(backend db)
+  // detail get
+  post: (id) => api.get(`/api/auth/post/${id}`),
+  // comment add
+  addComment: (postId, content) =>
+    api.post(`/api/auth/comment`, postId, { content }),
+  // comments get
+  getComments: (postId) => api.get(`/api/auth/comment/${postId}`),
+  //TODO comment delete
+  delComment: (postId, commentId) =>
+    api.delete(`/api/posts/${postId}/comments/${commentId}`),
+  //TODO comment update
+  editComment: (postId, commentId, content) =>
+    api.put(`/api/posts/${postId}/comments/${commentId}`, { content }),
+  // api.patch(`/comments/${commentId}`, { content }),
 };

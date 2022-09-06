@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import { useDispatch } from "react-redux";
 import { addComment } from "../../redux/modules/comments";
 
@@ -13,7 +14,7 @@ const AddComment = ({ currentUserId, postId }) => {
   const [comment, onChangeCommentHandler, commentReset] = useInput();
 
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState();
+  // const [error, setError] = useState();
 
   /**댓글 추가 */
   const onSubmitCommentHandler = (event) => {
@@ -22,22 +23,16 @@ const AddComment = ({ currentUserId, postId }) => {
 
     try {
       if (comment === "") return;
-
       setIsLoading(true);
-
       const data = {
         post: postId,
         username: currentUserId,
         comment: comment,
       };
       console.log(data);
-      // const { data } = await apis.addComment();
       dispatch(addComment(data));
-
-      // setComments([...comments, data]);
     } catch (error) {
-      setError(error);
-
+      // setError(error);
       console.log(error);
     } finally {
       setIsLoading(false);
