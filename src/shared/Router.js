@@ -4,12 +4,14 @@ import Home from "../components/home/Home";
 import AddPost from "../components/addPost/AddPost";
 import Login from "../components/login/Login";
 import SignUp from "../components/signup/SignUp";
-import Detail from "../components/detail/Detail";
+
+import Detail from "../pages/Detail";
+import EditPost from "../components/editPost/EditPost";
+
 import { auth } from "./firebase";
 import { onAuthStateChanged } from "firebase/auth";
 
 const Router = () => {
-
   const [is_login, setIsLogin] = React.useState(false);
 
   // console.log(auth.currentUser);
@@ -34,7 +36,8 @@ const Router = () => {
         <Route path="/addPost" element={<AddPost />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/detail" element={<Detail />} />
+        <Route path="/posts/:id" element={<Detail />} />
+        <Route path="/editPost/:id" element={<EditPost />} />
       </Routes>
     </BrowserRouter>
   );

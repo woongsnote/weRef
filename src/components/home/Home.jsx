@@ -1,45 +1,73 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
+import "./HomeStyle.css";
 import Header from "../header/Header";
-import HomeCrad from "../homeCard/HomeCrad";
+import HomeCard from "../homeCard/HomeCard";
 
 import { Button } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
+import { useDispatch, useSelector } from "react-redux";
+
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
 
 import axios from "axios";
+import { getPosts } from "../../redux/modules/posts";
 
 export default function Home() {
-    const navigate = useNavigate()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(getPosts());
+  }, [dispatch]);
 
+  // const data = useSelector((state) => state.post.posts);
+  // const reverse = [...data].reverse();
+  // axios.get("http://52.79.235.129/api/post");
+  // console.log(axios.get("http://52.79.235.129/api/post"));
 
-    axios.get("http://52.79.235.129/api/post").then(response=>{
-        console.log(response)
-    })
+  const [loginCheck, setLoginCheck] = useState(true);
 
-    const [loginCheck, setLoginCheck] = useState(true);
+  const goAddPost = () => {
+    loginCheck === true ? navigate("/addPost") : alert("로그인 해주세요!");
+  };
 
-    const goAddPost=()=>{
-        loginCheck === true ? navigate('/addPost') : alert('로그인 해주세요!')
-    }
-
-    return(
-        <>
-            <Header />
-            <Button variant="contained"
-            onClick={goAddPost}>글쓰기</Button>
-            <Box sx={{ flexGrow: 1 }}>
-                <Grid container spacing={3} columns={16}>
-                    <HomeCrad />
-                    <HomeCrad />
-                    <HomeCrad />
-                    <HomeCrad />
-                    <HomeCrad />
-                </Grid>
-            </Box>
-        </>
-    )
-};
+  return (
+    <>
+      <Header />
+      <div className="greeting">
+        <h1>WEREF!</h1>
+        <p>오늘은 무엇을 배웠나요?</p>
+      </div>
+      <div className="writeBtn">
+        <Button variant="contained" onClick={goAddPost}>
+          글쓰기
+        </Button>
+      </div>
+      <Box sx={{ flexGrow: 2 }}>
+        <Grid
+          container
+          spacing={8}
+          columns={16}
+          id="cardLayout"
+          columnSpacing={{ md: -20 }}
+        >
+          {/* {reverse.map((item) => (
+            <HomeCard
+              key={item.id}
+              id={item.id}
+              title={item.title}
+              description={item.description}
+              author={item.author}
+              imgUrl={item.imgUrl}
+              cntHeart={item.cntHeart}
+              referenceList={item.referenceList}
+            />
+          ))} */}
+        </Grid>{" "}
+      </Box>
+    </>
+  );
+}
