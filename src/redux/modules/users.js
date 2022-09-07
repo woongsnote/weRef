@@ -30,28 +30,24 @@ export const createUserThunk = createAsyncThunk(
     }
 );
 
+
+
 export const loginUserThunk = createAsyncThunk(
   "user/findUser",
   async (userInfo, thunk) => {
       console.log("test")
       try {
           const { data } = await 
-          axios.get('http://localhost:3001/user', userInfo)
-          const user = data[0];
+          // axios.post('http://localhost:3001/user/login', userInfo)
+          axios.post('http://52.79.235.129/api/member/login', userInfo)
+          
+          console.log(userInfo)
           console.log(data)
-          if (user) {
-              if (user.password === userInfo.password) {
-                  const token = generateJWTToken(user.email);
-                  return thunk.fulfillWithValue("Login succeeded.");
-              } else {
-                  return thunk.rejectWithValue("Incorrect password.");
-              }
-          } else {
-              return thunk.rejectWithValue("No such user.");
-          }
+
       } catch (error) {
-          return thunk.rejectWithValue(error);
-      }
+        return thunk.rejectWithValue(error);
+        
+    }
   }
 );
 

@@ -14,7 +14,7 @@ import IconButton from '@mui/material/IconButton';
 
 export default function Header() {
     const navigate = useNavigate()
-
+    const aaaa = ()=>{}
 
     return(
         <Box sx={{ flexGrow: 1 }}>
@@ -31,8 +31,10 @@ export default function Header() {
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         WeReF
                     </Typography>
-                    <Button color="inherit" onClick={navigate('/login')}>Login</Button>
-                    <Button color="inherit" onClick={navigate('/signup')}>SignUp</Button>
+                    <Button color="inherit" onClick={() => { navigate("/signup"); }} > SignUp </ Button>
+                    <Button color="inherit" onClick={() => { navigate("/login"); }} > login </ Button>
+                    {/* <Button color="inherit" onClick={navigate('/login')}>Login</Button> */}
+                    {/* <Button color="inherit" onClick={navigate('/signup')}>SignUp</Button> */}
                 </Toolbar>
             </AppBar>
         </Box>

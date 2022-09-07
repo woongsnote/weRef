@@ -13,15 +13,17 @@ export default function Login() {
       user_PW: "",
     });
 
-
     const loginFB =  () => {
         dispatch(
           loginUserThunk({
-          email: user_ID.user_ID,
-          password: user_PW.user_PW
+          username: user_ID,
+          password: user_PW
           })
         ); 
     };
+
+    console.log(user_PW)
+
 
     return(
         <div>
@@ -29,10 +31,7 @@ export default function Login() {
             <input
             type="text"
             onChange={(ev) => {
-              const { value } = ev.target;
-              setuser_ID({
-                user_ID: value
-              });
+              setuser_ID(ev.target.value);
             }}
           />
  <br />
@@ -40,11 +39,8 @@ export default function Login() {
             <input
             type="text"
             onChange={(ev) => {
-              const { value } = ev.target;
-              setuser_PW({
-                user_PW: value
-              });
-            }}
+                setuser_PW(ev.target.value);
+              }}
           />
             <br />
             <button onClick={loginFB} >로그인</button>           
