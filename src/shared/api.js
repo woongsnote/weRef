@@ -5,12 +5,15 @@ import axios from "axios";
 const baseURL = "http://13.125.246.47:8080/api";
 const api = axios.create({
   baseURL: baseURL,
-  withCredentials: true,
+  withCredentials: false,
 });
-// const api = axios.create({ baseURL: process.env.REACT_APP_API_URL });
-// axios.defaults.withCredentials = true;
 
-//TODO interceptor 구현
+// const api = axios.create({
+//   baseURL: process.env.REACT_APP_API_URL,
+//   withCredentials: true,
+// });
+
+//TODO interceptor 구현 - 수정 필요
 api.interceptors.request.use((config) => {
   const accessToken = localStorage.getItem("accessToken");
   const refreshToken = localStorage.getItem("refreshToken");
@@ -67,15 +70,15 @@ export const authAPI = {
 /** DESC:  게시글 API */
 export const postAPI = {
   // 게시글 전체 조회
-  posts: () => api.get(`/post`),
+  posts: () => api.get(`/posts`),
   // 게시글 상세 조회
-  post: (id) => api.get(`/auth/post/${id}`),
+  post: (postId) => api.get(`/post/${postId}`),
   //게시글 추가
-  addPost: () => api.post(),
+  addPost: (content) => api.post(`/auth/post`, content),
   //게시글 편집
-  editPost: () => api.put(),
+  editPost: (postId, content) => api.put(`/auth/post/${postId}`, content),
   //게시글 삭제
-  deletePost: () => api.delete(),
+  deletePost: (postId) => api.delete(`/auth/post/${postId}`),
 };
 
 /** DESC: 댓글 API */
