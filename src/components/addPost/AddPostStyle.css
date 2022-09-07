@@ -1,0 +1,98 @@
+/* .css-wb57ya-MuiFormControl-root-MuiTextField-root{
+    width: 800px;
+} */
+li {
+  list-style: none;
+  display: flex;
+}
+
+.addPost {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 800px;
+  height: 700px;
+  box-shadow: 1px 1px 3px 2px gray;
+  margin: auto;
+  margin-top: 150px;
+}
+
+.addPostTop {
+  width: 800px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.imgFile {
+  width: 200px;
+  height: 200px;
+
+  display: flex;
+  flex-direction: column;
+}
+.imgFile img {
+  width: 200px;
+  height: 200px;
+  background-size: cover;
+}
+.imgFile span {
+  color: #1976d2;
+  cursor: pointer;
+  font-size: 15px;
+}
+.imgFile span:active {
+  font-size: 16px;
+}
+
+.imgFile label {
+  width: 200px;
+  height: 20px;
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  box-shadow: 0px 0px 0px 1px gray;
+}
+.imgFile label:hover {
+  cursor: pointer;
+}
+
+.linkUrls {
+  display: flex;
+  flex-direction: column;
+}
+.linkUrls input {
+  width: 300px;
+}
+
+
+.refLinks{
+  display: flex;
+  flex-direction: column;
+}
+
+.addPostBody {
+  display: flex;
+  flex-direction: column;
+  margin-top: 50px;
+}
+
+#title {
+  width: 628px;
+}
+#description {
+  width: 600px;
+}
+
+.appPostBtns {
+  margin-top: 20px;
+}
+.appPostBtns button {
+  margin-left: 20px;
+  margin-right: 20px;
+}
