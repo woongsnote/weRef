@@ -39,6 +39,7 @@ li {
   background-size: cover;
 }
 .imgFile span {
+  color: #1976d2;
   cursor: pointer;
   font-size: 15px;
 }
@@ -48,14 +49,14 @@ li {
 
 .imgFile label {
   width: 200px;
-  height: 50px;
+  height: 20px;
   cursor: pointer;
 
   display: flex;
   justify-content: center;
   align-items: center;
 
-  box-shadow: 1px 1px 2px 1px gray;
+  box-shadow: 0px 0px 0px 1px gray;
 }
 .imgFile label:hover {
   cursor: pointer;

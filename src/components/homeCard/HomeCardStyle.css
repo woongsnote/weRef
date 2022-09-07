@@ -1,4 +1,22 @@
+#cardLayout {
+  margin: auto;
+  padding-left: 0;
+}
+#cardLayout div {
+  padding-left: 0;
+  padding-right: 0;
+}
+#cardLayout span {
+  margin-left: 15px;
+}
+#cardLayout p {
+  margin-left: 15px;
+}
+
+#goDetail {
+  box-shadow: 3px 3px 3px 3px gray;
+}
 #goDetail:hover {
-    cursor: pointer;
-    box-shadow: 1px 1px 1px 1px gray;
+  cursor: pointer;
+  box-shadow: 3px 3px 3px 4px rgb(104, 104, 104);
 }
