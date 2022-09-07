@@ -2,9 +2,10 @@
 import { Box } from "@mui/material";
 import AddComment from "./AddComment";
 import Comment from "./Comment";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { getComments } from "../../redux/modules/comments";
+import { useSelector } from "react-redux";
+// import { useDispatch } from "react-redux";
+// import { useEffect } from "react";
+// import { getComments } from "../../redux/modules/comments";
 const CommentList = ({ postId, currentUserId }) => {
   // const dispatch = useDispatch();
 

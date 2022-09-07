@@ -32,7 +32,7 @@ export const loginUserThunk = createAsyncThunk(
   async (userInfo, thunk) => {
     console.log("test");
     try {
-      const { data } =
+      const data =
         await // axios.post('http://localhost:3001/user/login', userInfo)
         axios
           .post("http://13.125.246.47:8080/api/member/login", userInfo)

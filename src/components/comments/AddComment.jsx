@@ -25,11 +25,10 @@ const AddComment = ({ currentUserId, postId }) => {
       if (comment === "") return;
       setIsLoading(true);
       const data = {
-        post: postId,
-        username: currentUserId,
         comment: comment,
       };
       console.log(data);
+
       dispatch(addComment(data));
     } catch (error) {
       // setError(error);

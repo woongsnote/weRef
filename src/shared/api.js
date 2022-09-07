@@ -5,7 +5,10 @@ import axios from "axios";
 const baseURL = "http://13.125.246.47:8080/api";
 const api = axios.create({
   baseURL: baseURL,
-  withCredentials: false,
+  withCredentials: true,
+  // headers: {
+  //   "Content-Type": "application/json",
+  // },
 });
 
 // const api = axios.create({
