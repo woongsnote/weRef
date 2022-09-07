@@ -10,6 +10,7 @@ import DetailContent from "../components/detail/DetailContent";
 import CommentList from "../components/comments/CommentList";
 import { getComments } from "../redux/modules/comments";
 import Loading from "../components/loading/Loading";
+import AddComment from "../components/comments/AddComment";
 
 // import { RESP } from "../shared/response";
 
@@ -50,13 +51,11 @@ const Detail = () => {
           alignItems: "flex-end",
           backgroundColor: "white",
           // width: "100%",
-        }}
-      >
+        }}>
         <Button
           onClick={() => {
             navigate(`/`);
-          }}
-        >
+          }}>
           이전으로
         </Button>
       </Box>
@@ -72,14 +71,12 @@ const Detail = () => {
           alignItems: "flex-end",
           backgroundColor: "white",
           // width: "100%",
-        }}
-      >
+        }}>
         {/* Edit page 이동(로그인 했을 때만 표시) */}
         <Button
           onClick={() => {
             navigate(`/editPost/${id}`);
-          }}
-        >
+          }}>
           수정하기
         </Button>
       </Box>
@@ -98,8 +95,7 @@ const Detail = () => {
           width: "100%",
           backgroundColor: "white",
           justifyContent: "flex-end",
-        }}
-      >
+        }}>
         <BackButton />
         {currentUserId === post.author ? <EditButton /> : null}
       </Box>
@@ -112,6 +108,7 @@ const Detail = () => {
         likes={post.cntHeart}
         links={post.referenceList}
       />
+      <AddComment postId={id} />
       <CommentList currentUserId={currentUserId} postId={id} />
     </>
   );

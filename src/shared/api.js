@@ -6,9 +6,13 @@ const baseURL = "http://13.125.246.47:8080/api";
 const api = axios.create({
   baseURL: baseURL,
   withCredentials: true,
-  // headers: {
-  //   "Content-Type": "application/json",
-  // },
+  headers: {
+    //   "Content-Type": "application/json",
+    //   Authorization:
+    //     "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY2MjU2NjAwNX0.syKXU4L3o7r-OGkNHHCCXIzrByO896ClF2mhZlApaYm3e516W5oaLBcUCAVGLLTmKZa3mNL08ZKo-57AAO_9tg",
+    //   "Refresh-Token":
+    //     "eyJKV1RfSEVBREVSX1BBUkFNX1RZUEUiOiJoZWFkZXJUeXBlIiwiYWxnIjoiSFM1MTIifQ.eyJleHAiOjE2NjMxNjkwMDV9.8addVq33P7wTKn0i7GrorhZs9vwQ46doo6vlRBvq1fzdnvM0rErcCPHcknjkHnhJdGoAGQRrdwghDKRKpDfGdw",
+  },
 });
 
 // const api = axios.create({
@@ -17,34 +21,34 @@ const api = axios.create({
 // });
 
 //TODO interceptor 구현 - 수정 필요
-api.interceptors.request.use((config) => {
-  const accessToken = localStorage.getItem("accessToken");
-  const refreshToken = localStorage.getItem("refreshToken");
+// api.interceptors.request.use((config) => {
+//   const accessToken = localStorage.getItem("accessToken");
+//   const refreshToken = localStorage.getItem("refreshToken");
 
-  if (!accessToken || !refreshToken) {
-    config.headers.common["Authorization"] = null;
-    config.headers.common["refresh-token"] = null;
-  } else {
-    config.headers.common["Authorization"] = accessToken;
-    config.headers.common["refresh-token"] = refreshToken;
-    return config;
-  }
-  console.log(config);
-});
+//   if (!accessToken || !refreshToken) {
+//     config.headers.common["Authorization"] = null;
+//     config.headers.common["refresh-token"] = null;
+//   } else {
+//     config.headers.common["Authorization"] = accessToken;
+//     config.headers.common["refresh-token"] = refreshToken;
+//     return config;
+//   }
+//   console.log(config);
+// });
 
 /** DESC: 응답 인터셉터  */
-axios.interceptors.response.use(
-  function (response) {
-    // 2xx 범위에 있는 상태 코드는 이 함수를 트리거 합니다.
-    // 응답 데이터가 있는 작업 수행
-    return response;
-  },
-  function (error) {
-    // 2xx 외의 범위에 있는 상태 코드는 이 함수를 트리거 합니다.
-    // 응답 오류가 있는 작업 수행
-    return Promise.reject(error);
-  }
-);
+// axios.interceptors.response.use(
+//   function (response) {
+//     // 2xx 범위에 있는 상태 코드는 이 함수를 트리거 합니다.
+//     // 응답 데이터가 있는 작업 수행
+//     return response;
+//   },
+//   function (error) {
+//     // 2xx 외의 범위에 있는 상태 코드는 이 함수를 트리거 합니다.
+//     // 응답 오류가 있는 작업 수행
+//     return Promise.reject(error);
+//   }
+// );
 
 /** DESC: 로컬 테스트 API */
 export const localAPI = {
@@ -87,8 +91,7 @@ export const postAPI = {
 /** DESC: 댓글 API */
 export const commentsAPI = {
   /** DESC: 댓글 추가*/
-  addComment: (postId, content) =>
-    api.post(`/auth/comment`, postId, { content }), //
+  addComment: (postId, comment) => api.post(`/auth/comment/${postId}`, comment), //
   /** DESC: 댓글 가져오기 */
   getComments: (postId) => api.get(`/auth/comment/${postId}`),
   //TODO

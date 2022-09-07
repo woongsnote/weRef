@@ -10,9 +10,9 @@ const initialState = {
 /**Create Comment */
 export const addComment = createAsyncThunk(
   "addComment",
-  async (payload, thunkAPI) => {
+  async (args, thunkAPI) => {
     try {
-      const { data } = await commentsAPI.addComment(payload);
+      const data = await commentsAPI.addComment(args);
       console.log(data);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {

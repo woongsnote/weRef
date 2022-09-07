@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 import { useDispatch } from "react-redux";
 import { addComment } from "../../redux/modules/comments";
@@ -17,28 +18,47 @@ const AddComment = ({ currentUserId, postId }) => {
   // const [error, setError] = useState();
 
   /**댓글 추가 */
+  // const onSubmitCommentHandler = (event) => {
+  //   //새로고침 방지
+  //   event.preventDefault();
+
+  //   try {
+  //     if (comment === "") return;
+  //     setIsLoading(true);
+  //     dispatch(addComment(postId), { comment });
+  //   } catch (error) {
+  //     // setError(error);
+  //     console.log(error);
+  //   } finally {
+  //     setIsLoading(false);
+
+  //     // reset Input
+  //     commentReset();
+  //   }
+  // };
   const onSubmitCommentHandler = (event) => {
     //새로고침 방지
     event.preventDefault();
 
-    try {
-      if (comment === "") return;
-      setIsLoading(true);
-      const data = {
-        comment: comment,
-      };
-      console.log(data);
+    const apiPost = {
+      url: `http://13.125.246.47:8080/api/auth/comment/${postId}`,
+      method: "POST",
+      data: { comment },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: window.localStorage.accessToken,
 
-      dispatch(addComment(data));
-    } catch (error) {
-      // setError(error);
-      console.log(error);
-    } finally {
-      setIsLoading(false);
+        // "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY2MjU2ODIwNH0.SnIFHhjOg2VLCMxxrYGdd-UImZNE_Z94rllnseWfNClNrxE8Cx6VNXaj3f8dmSSpfh6GU3R_gr5e8x6Kf1__Kg",
+        "Refresh-Token": window.localStorage.refreshToken,
+        // "eyJKV1RfSEVBREVSX1BBUkFNX1RZUEUiOiJoZWFkZXJUeXBlIiwiYWxnIjoiSFM1MTIifQ.eyJleHAiOjE2NjMxNzEyMDR9.yXlSZj-NtB7T6P0IBUMTNZMYwHwfOv5oQQta6virA7fd2amSC2homfEOdZ-a0WA-eTCm6BI9FBPQgqxUXWpWLg",
+      },
+      withCredentials: true,
+    };
+    console.log(apiPost);
+    axios(apiPost);
 
-      // reset Input
-      commentReset();
-    }
+    //     // reset Input
+    commentReset();
   };
   return currentUserId === "" ? (
     <Box
@@ -51,8 +71,7 @@ const AddComment = ({ currentUserId, postId }) => {
         height: "5.5rem",
         alignItems: "center",
         justifyContent: "center",
-      }}
-    >
+      }}>
       <Typography>로그인 후 이용가능합니다.</Typography>
     </Box>
   ) : (
@@ -82,8 +101,7 @@ const AddComment = ({ currentUserId, postId }) => {
               border: "none",
               cursor: "pointer",
               color: "#1976d2",
-            }}
-          >
+            }}>
             {isLoading ? "추가 중..." : <AddBoxRoundedIcon />}
           </button>
         </Box>
