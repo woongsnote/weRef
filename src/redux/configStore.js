@@ -11,6 +11,7 @@ const store = configureStore({
     comments,
     posts,
     post,
+    heart,
   },
   //   devTools: process.env.NODE_ENV !== "production",
 });

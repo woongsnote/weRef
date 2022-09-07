@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getPost } from "../redux/modules/post";
 
-import { Box, Button, Link } from "@mui/material";
+import { Box, Button } from "@mui/material";
 
 import Header from "../components/header/Header";
 import DetailContent from "../components/detail/DetailContent";
@@ -35,11 +35,10 @@ const Detail = () => {
 
     setTimeout(() => {
       // setComments(RESP.COMMENTS.result);
-
       // setData(post);
       setLoading(false);
     }, 1000);
-  }, []);
+  }, [dispatch, id]);
   // console.log(post);
   // console.log(data);
   // const links = data.referenceList;
@@ -54,13 +53,9 @@ const Detail = () => {
         }}
       >
         <Button
-          variant="body1"
           onClick={() => {
             navigate(`/`);
           }}
-          underline="none"
-          component={"button"}
-          marginRight="2rem"
         >
           이전으로
         </Button>
@@ -81,12 +76,9 @@ const Detail = () => {
       >
         {/* Edit page 이동(로그인 했을 때만 표시) */}
         <Button
-          variant="body1"
           onClick={() => {
             navigate(`/editPost/${id}`);
           }}
-          underline="none"
-          component={"button"}
         >
           수정하기
         </Button>

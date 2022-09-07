@@ -2,12 +2,23 @@ import axios from "axios";
 
 // const baseURL = "http://localhost:3001";
 
-// const baseURL = "http://52.79.235.129";
-const baseURL = "http://13.125.246.47:8080";
-const api = axios.create({ baseURL: baseURL });
+const baseURL = "http://52.79.235.129";
+// const baseURL = "http://13.125.246.47:8080";
+const api = axios.create({ baseURL: baseURL, withCredentials: true });
 // const api = axios.create({ baseURL: process.env.REACT_APP_API_URL });
 // axios.defaults.withCredentials = true;
-
+//TODO
+// api.interceptors.request.use(
+//   function (config) {
+//     config.headers["Content-Type"] = "application/json; charset=utf-8";
+//     config.headers["Authorization"] = " token ";
+//     config.headers["refreshToken"] = "token";
+//     return config;
+//   },
+//   function (error) {
+//     return Promise.reject(error);
+//   }
+// );
 export const apis = {
   // 1. local(db.json)
   //detail
