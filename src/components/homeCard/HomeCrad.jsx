@@ -2,6 +2,8 @@ import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import "./HomeCardStyle.css";
+
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -9,13 +11,12 @@ import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import Avatar from "@mui/material/Avatar";
 import CardActions from "@mui/material/CardActions";
-import IconButton from "@mui/material/IconButton";  
+import IconButton from "@mui/material/IconButton";
 import { red } from "@mui/material/colors";
 import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { useDispatch, useSelector } from "react-redux";
-import { updatePosts } from "../../redux/modules/post";
 import { updateHeart, addHeart, deleteHeart } from "../../redux/modules/heart";
 
 import { useEffect } from "react";
@@ -30,7 +31,7 @@ const LikeIcon = (props) => {
   const newData = [...data].filter((item) => item.id === props.id)[0];
 
   useEffect(() => {
-    setLikeNum(newData.heartCnt);
+    setLikeNum(newData.cntHeart);
   }, []);
 
   const btnPush = () => {
@@ -42,26 +43,27 @@ const LikeIcon = (props) => {
       imgUrl: newData.imgUrl,
       createAt: newData.createAt,
       modifiedAt: newData.modifiedAt,
-      heartCnt: likeNum,
+      referenceList: newData.referenceList,
+      cntHeart: likeNum,
       id: newData.id,
     };
     let postHeart = {
       userId: "userId",
       id: newData.id,
-    }
+    };
 
     if (liked === false) {
       setLiked(true);
       setLikeNum(likeNum + 1);
-      putData.heartCnt = likeNum + 1;
-      dispatch(updatePosts(putData));
+      putData.cntHeart = likeNum + 1;
+      dispatch(updateHeart(putData));
       dispatch(addHeart(postHeart));
     } else {
       setLiked(false);
       setLikeNum(likeNum - 1);
-      putData.heartCnt = likeNum - 1;
-      dispatch(updatePosts(putData));
-      dispatch(deleteHeart())
+      putData.cntHeart = likeNum - 1;
+      dispatch(updateHeart(putData));
+      dispatch(deleteHeart(postHeart));
     }
   };
 
@@ -93,7 +95,7 @@ export default function HomeCrad(props) {
 
   return (
     <Grid item xs={4}>
-      <Card sx={{ maxWidth: 345 }} id="goDetail">
+      <Card sx={{ maxWidth: 300 }} id="goDetail">
         <div onClick={goDetail}>
           <CardHeader
             // avatar={<Avatar sx={{ bgcolor: red[10] }} src="img" />}
@@ -119,7 +121,7 @@ export default function HomeCrad(props) {
         </div>
         <CardActions disableSpacing>
           {/* 좋아요버튼 컴포넌트 */}
-          <LikeIcon id={props.id} heartCnt={props.heartCnt} />
+          <LikeIcon id={props.id} cntHeart={props.cntHeart} />
         </CardActions>
       </Card>
     </Grid>

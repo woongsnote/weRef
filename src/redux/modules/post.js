@@ -9,16 +9,19 @@ const initialState = {
   error: null,
 };
 
-
 const baseURL = "http://localhost:3001/data"
+const teamBaseURL = "http://13.125.246.47:8080/api/post"
+const teamBaseLogedURL = "http://13.125.246.47:8080/api/auth/post"
+const newBaseUrl = "http://52.79.235.129/api/post"
 /* Thunk function */
 // [GET - 데이터 전체 조회]
 export const getPosts = createAsyncThunk(
   "GET_ALL_POSTS",
   async (payload, thunkAPI) => {
     try {
-      const { data } = await axios.get(baseURL);
-      return thunkAPI.fulfillWithValue(data);
+      const { data } = await axios.get(newBaseUrl);
+      console.log(data.data)
+      return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -48,7 +51,7 @@ export const postPosts = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const {data} = await axios.post(
-        `${baseURL}`,payload
+        `${teamBaseLogedURL}`,payload
       );
       console.log('data',data);
       return thunkAPI.fulfillWithValue(data)
@@ -137,6 +140,10 @@ export const postsSlice = createSlice({
       state.error = action.payload;
     },
     [deletePosts.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    [updatePosts.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },

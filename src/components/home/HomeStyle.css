@@ -1,0 +1,26 @@
+.greeting{
+  text-align: center;
+}
+.greeting h1{
+  font-size: 77px;
+}
+.greeting p{
+  font-size: 20px;
+}
+
+.writeBtn {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  margin-right: 40px;
+}
+.writeBtn button {
+  width: 100px;
+  color: white;
+  background-color: #1976d2;
+}
+.writeBtn button:hover {
+  background-color: #1976d2ce;
+}
+

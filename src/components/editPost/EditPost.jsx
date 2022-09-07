@@ -2,7 +2,6 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-
 import Header from "../header/Header";
 
 import axios from "axios";
@@ -16,10 +15,18 @@ import CloseIcon from "@mui/icons-material/Close";
 
 
 const AddLinks = () => {
+  const dispatch = useDispatch()
+  const param = useParams()
+
   const [refLinks, setRefLinks] = useState([]);
   const [inputText, setInputText] = useState("");
   const [nextId, setNextId] = useState(1);
 
+  const [getRef, setGetRef] = useState();
+  
+  const data = useSelector((state) => state.post.posts);
+  const editData = [...data].filter((item)=>item.id === parseInt(param.id))
+  
 
   const handleChange = (e) => setInputText(e.target.value);
   const handleClick = () => {
@@ -68,6 +75,9 @@ const AddLinks = () => {
   );
 };
 
+
+
+
 export default function EditPost() {
   const navigate = useNavigate();
   const param = useParams();
@@ -77,24 +87,18 @@ export default function EditPost() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [imgUrl, setImgUrl] = useState([]);
-
-  const data = useSelector((state) => state.post.posts);
-  useEffect(() => {
-    dispatch(getPosts());
-  }, [dispatch]);
+  const [getRef, setGetRef] = useState([]);
   
-  console.log(data[param.id-1])
-
-
-
+  const data = useSelector((state) => state.post.posts);
+  const editData = [...data].filter((item)=>item.id === parseInt(param.id))
+  
+  // Detail=> props 처리 예정
 
   const titleHandle = (e) => {
     setTitle(e.target.value);
-    console.log(title)
   };
   const descriptionHandle = (e) => {
     setDescription(e.target.value);
-    console.log(description)
   };
 
   // 이미지 미리보기
@@ -125,10 +129,11 @@ export default function EditPost() {
     userId: userId,
     title: title,
     description: description,
+    author: "author",
     imgUrl: "",
-    heartCnt: 0,
-    refUrl: refUrl,
-    id:param.id
+    cntHeart: 0,
+    referenceList: refUrl,
+    id: param.id,
   };
 
   const eidtPost = () => {
@@ -159,7 +164,6 @@ export default function EditPost() {
           refUrl.push(document.getElementById(`${i}`).value);
         }
       }
-
 
       dispatch(updatePosts(newData));
       dispatch(getPosts());
@@ -194,7 +198,7 @@ export default function EditPost() {
           </div>
           <div className="linkUrls">
             <div className="refLinks">
-              <AddLinks />
+              <AddLinks/>
             </div>
           </div>
         </div>

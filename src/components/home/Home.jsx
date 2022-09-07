@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 
+import "./HomeStyle.css";
 import Header from "../header/Header";
 import HomeCrad from "../homeCard/HomeCrad";
 
@@ -36,11 +37,23 @@ export default function Home() {
   return (
     <>
       <Header />
-      <Button variant="contained" onClick={goAddPost}>
-        글쓰기
-      </Button>
-      <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={3} columns={16}>
+      <div className="greeting">
+        <h1>WEREF!</h1>
+        <p>오늘은 무엇을 배웠나요?</p>
+      </div>
+      <div className="writeBtn">
+        <Button variant="contained" onClick={goAddPost}>
+          글쓰기
+        </Button>
+      </div>
+      <Box sx={{ flexGrow: 2 }}>
+        <Grid
+          container
+          spacing={8}
+          columns={16}
+          id="cardLayout"
+          columnSpacing={{ md: -20 }}
+        >
           {reverse.map((item) => (
             <HomeCrad
               key={item.id}
@@ -48,8 +61,9 @@ export default function Home() {
               title={item.title}
               description={item.description}
               author={item.author}
-              heartCnt={item.heartCnt}
-              refUrl={item.refUrl}
+              imgUrl={item.imgUrl}
+              cntHeart={item.cntHeart}
+              referenceList={item.referenceList}
             />
           ))}
         </Grid>

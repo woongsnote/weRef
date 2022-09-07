@@ -11,7 +11,8 @@ const initialState = {
 
 
 const baseURL = "http://localhost:3001/data"
-const baseHeartURL = "http://localhost:3001/heart"
+const baseHeartURL = "http://localhost:3001/api/auth/heart/"
+//   'http://localhost:3001/heart/${postId}' delete URL
 /* Thunk function */
 
 
@@ -32,13 +33,29 @@ export const addHeart = createAsyncThunk(
   }
 )
 
+// [UPDATE]
+export const updateHeart = createAsyncThunk(
+  "UPDATAE_HEART",
+  async (payload, thunkAPI) => {
+    try {
+      const response = await axios.put(
+        `${baseHeartURL}/${payload.id}`,
+        payload.cntHeart
+      );
+      console.log("response", response);
+      return thunkAPI.fulfillWithValue(response.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 // [DELETE]
 export const deleteHeart = createAsyncThunk(
   "DELETE_HEART",
   async (payload, thunkAPI) => {
     try {
       await axios.delete(`${baseHeartURL}/${payload}`);
-    //   'http://localhost:3001/heart/${postId}'
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -75,7 +92,14 @@ export const heartSlice = createSlice({
       state.isLoading = false;
       state.hearts = state.hearts.filter((item) => item.id !== action.payload);
     },
-
+    [updateHeart.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.posts = state.posts.map((item) =>
+        item.id === action.id
+          ? { ...item, title: action.title, content: action.content }
+          : item
+      );
+    },
     /* Rejected */
 
     [addHeart.rejected]: (state, action) => {
@@ -83,6 +107,10 @@ export const heartSlice = createSlice({
       state.error = action.payload;
     },
     [deleteHeart.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    [updateHeart.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },
