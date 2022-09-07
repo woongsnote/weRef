@@ -6,14 +6,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getComments } from "../../redux/modules/comments";
 const CommentList = ({ postId, currentUserId }) => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getComments(postId));
-  }, [dispatch, postId]);
+  // useEffect(() => {
+  //   dispatch(getComments(postId));
+  // }, []);
 
   const { commentList } = useSelector((state) => state.comments);
-  // console.log(commentList)
+  console.log(commentList);
 
   return (
     <Box sx={{ border: "1px solid #eee" }} m={2} p={3} borderRadius={2}>

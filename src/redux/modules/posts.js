@@ -10,6 +10,9 @@ const initialState = {
 };
 
 const baseURL = "http://localhost:3001/data";
+const teamBaseURL = "http://13.125.246.47:8080/api/post";
+const teamBaseLogedURL = "http://13.125.246.47:8080/api/auth/post";
+const newBaseURL = "http://52.79.235.129/api/post";
 /* Thunk function */
 // [GET - 데이터 전체 조회]
 export const getPosts = createAsyncThunk(
@@ -43,11 +46,11 @@ export const postPosts = createAsyncThunk(
   "POST_POSTS",
   async (payload, thunkAPI) => {
     try {
-      const { data } = await axios.post(`${baseURL}`, payload);
+      const { data } = await axios.post(`${teamBaseLogedURL}`, payload);
       console.log("data", data);
       return thunkAPI.fulfillWithValue(data);
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+    } catch (errer) {
+      return thunkAPI.rejectWithValue(errer);
     }
   }
 );

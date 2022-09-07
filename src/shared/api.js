@@ -1,52 +1,61 @@
 import axios from "axios";
 
-// const baseURL = "http://localhost:3001";
+const baseURL = "http://localhost:3001";
 
-const baseURL = "http://52.79.235.129";
-// const baseURL = "http://13.125.246.47:8080";
+// const baseURL = "http://52.79.235.129";
+// const baseURL = "http://13.125.246.47:8080/api";
 const api = axios.create({ baseURL: baseURL, withCredentials: true });
 // const api = axios.create({ baseURL: process.env.REACT_APP_API_URL });
 // axios.defaults.withCredentials = true;
 
 //TODO interceptor 구현
-// api.interceptors.request.use(
-//   function (config) {
-//     config.headers["Content-Type"] = "application/json; charset=utf-8";
-//     config.headers["Authorization"] = " token ";
-//     config.headers["refreshToken"] = "token";
+// api.interceptors.request.use((config) => {
+//   const accessToken = localStorage.getItem("accessToken");
+//   const refreshToken = localStorage.getItem("refreshToken");
+
+//   if (!accessToken || !refreshToken) {
+//     config.headers.common["Authorization"] = null;
+//     config.headers.common["refresh-token"] = null;
+//   } else {
+//     config.headers.common["Authorization"] = accessToken;
+//     config.headers.common["refresh-token"] = refreshToken;
 //     return config;
-//   },
-//   function (error) {
-//     return Promise.reject(error);
 //   }
-// );
-export const apis = {
+// });
+export const localAPI = {
   // 1. local(db.json)
   //detail
-  // post: (postId) => api.get(`/posts/${postId}`),
-  // comment add
-  // addComment: (postId, content) => api.post(`/comments`, postId, { content }),
-  // comments get
-  // getComments: () => api.get(`/comments`),
-  // comment delete
-  // api.delete(`comments/${commentId}`),
+  post: (postId) => api.get(`/posts/${postId}`),
+  //comment add
+  addComment: (postId, content) => api.post(`/comments`, postId, { content }),
+  //comments get
+  getComments: () => api.get(`/comments`),
+  //comment delete
+  deleteComment: (commentId) => api.delete(`comments/${commentId}`),
+  //comment update
+  editComment: (commentId, content) =>
+    api.put(`/comments`, commentId, { content }),
+};
 
-  // comment update
-  // api.patch(`/comments/${commentId}`, { content }),
+export const authAPI = {};
 
-  // 2. server(backend db)
+export const postAPI = {
   // detail get
-  post: (id) => api.get(`/api/auth/post/${id}`),
+  post: (id) => api.get(`/auth/post/${id}`),
+};
+
+export const commentsAPI = {
+  // 2. server(backend db)
+
   // comment add
   addComment: (postId, content) =>
-    api.post(`/api/auth/comment`, postId, { content }),
-  // comments get
-  getComments: (postId) => api.get(`/api/auth/comment/${postId}`),
-  //TODO comment delete
-  delComment: (postId, commentId) =>
-    api.delete(`/api/posts/${postId}/comments/${commentId}`),
-  //TODO comment update
-  editComment: (postId, commentId, content) =>
-    api.put(`/api/posts/${postId}/comments/${commentId}`, { content }),
+    api.post(`/auth/comment`, postId, { content }), // // comments get
+  getComments: (postId) => api.get(`/auth/comment/${postId}`),
+  // //TODO comment delete
+  deleteComment: (postId, commentId) =>
+    api.delete(`/auth/comment/${postId}/${commentId}`),
+  // //TODO comment update
+  editComment: (postId, commentId, comment) =>
+    api.put(`/auth/comment/edit/${postId}/${commentId}`, { comment }),
   // api.patch(`/comments/${commentId}`, { content }),
 };

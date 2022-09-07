@@ -54,7 +54,7 @@ export default function Home() {
           id="cardLayout"
           columnSpacing={{ md: -20 }}
         >
-          {reverse.map((item) => (
+          {/* {reverse.map((item) => (
             <HomeCard
               key={item.id}
               id={item.id}
@@ -65,9 +65,8 @@ export default function Home() {
               cntHeart={item.cntHeart}
               referenceList={item.referenceList}
             />
-          ))}
+          ))} */}
         </Grid>{" "}
-        */}
       </Box>
     </>
   );

@@ -20,7 +20,7 @@ const Detail = () => {
   const { post } = useSelector((state) => state.post);
   // const { commentList } = useSelector((state) => state.comments);
   //로그인한 사용자 ID(임시값)
-  const currentUserId = "sang";
+  const currentUserId = "sang1";
   // const currentUserId = "";
   //데이터 가져오는 동안 로딩 처리
   const [isLoading, setLoading] = useState(true);
@@ -38,7 +38,7 @@ const Detail = () => {
       // setData(post);
       setLoading(false);
     }, 1000);
-  }, [dispatch, id]);
+  }, []);
   // console.log(post);
   // console.log(data);
   // const links = data.referenceList;

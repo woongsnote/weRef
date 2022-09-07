@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { apis } from "../../shared/api";
+import { localAPI } from "../../shared/api";
 
 const initialState = {
   comments: [],
@@ -12,7 +12,7 @@ export const addComment = createAsyncThunk(
   "addComment",
   async (args, thunkAPI) => {
     try {
-      const { data } = await apis.addComment(args);
+      const { data } = await localAPI.addComment(args);
       console.log(data);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
@@ -26,8 +26,10 @@ export const getComments = createAsyncThunk(
   "getComments",
   async (args, thunkAPI) => {
     try {
-      const { data } = await apis.getComments(args);
-      return thunkAPI.fulfillWithValue(data.data.commentlist);
+      const { data } = await localAPI.getComments(args);
+      console.log(data);
+      return thunkAPI.fulfillWithValue(data);
+      // return thunkAPI.fulfillWithValue(data.data.commentlist);// server
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -39,7 +41,7 @@ export const updateComment = createAsyncThunk(
   "updateComment",
   async (args, thunkAPI) => {
     try {
-      const { data } = await apis.editComment(args);
+      const { data } = await localAPI.editComment(args);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -52,7 +54,7 @@ export const deleteComment = createAsyncThunk(
   "deleteComment",
   async (args, thunkAPI) => {
     try {
-      const { data } = await apis.delComment(args);
+      const { data } = await localAPI.deleteComment(args);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -110,6 +112,7 @@ export const commentsSlice = createSlice({
       );
 
       state.commentList = newState;
+      return newState;
     },
     [deleteComment.rejected]: (state, action) => {
       state.isLoading = false;
