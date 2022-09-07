@@ -28,7 +28,7 @@ const LikeIcon = (props) => {
   const [liked, setLiked] = useState(false);
   const [likeNum, setLikeNum] = useState(0);
 
-  const data = useSelector((state) => state.post.posts);
+  const data = useSelector((state) => state.posts.posts);
   const newData = [...data].filter((item) => item.id === props.id)[0];
 
   useEffect(() => {
@@ -91,8 +91,7 @@ export default function HomeCard(props) {
   const navigate = useNavigate();
 
   const goDetail = () => {
-    // navigate(`/posts/${props.id}`);
-    navigate(`/posts/1`);
+    navigate(`/posts/${props.id}`);
   };
 
   return (

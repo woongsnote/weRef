@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { localAPI } from "../../shared/api";
+import { localAPI, postAPI } from "../../shared/api";
 
 const initialState = {
   post: {},
@@ -9,9 +9,9 @@ const initialState = {
 
 export const getPost = createAsyncThunk("getPost", async (args, thunkAPI) => {
   try {
-    const { data } = await localAPI.post(args);
-    // return thunkAPI.fulfillWithValue(data.data); //서버 통신
-    return thunkAPI.fulfillWithValue(data);
+    const { data } = await postAPI.post(args);
+    return thunkAPI.fulfillWithValue(data.data); //서버 통신
+    // return thunkAPI.fulfillWithValue(data);
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
   }

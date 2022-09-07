@@ -11,7 +11,7 @@ const initialState = {
 
 const baseURL = "http://localhost:3001/data";
 const teamBaseURL = "http://13.125.246.47:8080/api/post";
-const teamBaseLogedURL = "http://13.125.246.47:8080/api/auth/post";
+const teamBaseLogedURL = "http://13.125.246.47:8080/api/post";
 const newBaseURL = "http://52.79.235.129/api/post";
 /* Thunk function */
 // [GET - 데이터 전체 조회]
@@ -19,8 +19,9 @@ export const getPosts = createAsyncThunk(
   "GET_ALL_POSTS",
   async (payload, thunkAPI) => {
     try {
-      const { data } = await axios.get(baseURL);
-      return thunkAPI.fulfillWithValue(data);
+      const { data } = await axios.get(teamBaseLogedURL);
+      console.log(data);
+      return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }

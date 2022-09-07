@@ -23,8 +23,9 @@ export default function Home() {
     dispatch(getPosts());
   }, [dispatch]);
 
-  // const data = useSelector((state) => state.post.posts);
-  // const reverse = [...data].reverse();
+  const data = useSelector((state) => state.posts.posts);
+  // console.log(data);
+  const reverse = [...data].reverse();
   // axios.get("http://52.79.235.129/api/post");
   // console.log(axios.get("http://52.79.235.129/api/post"));
 
@@ -54,7 +55,7 @@ export default function Home() {
           id="cardLayout"
           columnSpacing={{ md: -20 }}
         >
-          {/* {reverse.map((item) => (
+          {reverse.map((item) => (
             <HomeCard
               key={item.id}
               id={item.id}
@@ -65,8 +66,8 @@ export default function Home() {
               cntHeart={item.cntHeart}
               referenceList={item.referenceList}
             />
-          ))} */}
-        </Grid>{" "}
+          ))}
+        </Grid>
       </Box>
     </>
   );

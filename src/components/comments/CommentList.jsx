@@ -13,7 +13,6 @@ const CommentList = ({ postId, currentUserId }) => {
   // }, []);
 
   const { commentList } = useSelector((state) => state.comments);
-  console.log(commentList);
 
   return (
     <Box sx={{ border: "1px solid #eee" }} m={2} p={3} borderRadius={2}>
