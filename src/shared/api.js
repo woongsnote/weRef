@@ -7,7 +7,8 @@ const baseURL = "http://52.79.235.129";
 const api = axios.create({ baseURL: baseURL, withCredentials: true });
 // const api = axios.create({ baseURL: process.env.REACT_APP_API_URL });
 // axios.defaults.withCredentials = true;
-//TODO
+
+//TODO interceptor 구현
 // api.interceptors.request.use(
 //   function (config) {
 //     config.headers["Content-Type"] = "application/json; charset=utf-8";
