@@ -24,9 +24,7 @@ export default function Home() {
   }, [dispatch]);
 
   const data = useSelector((state) => state.post.posts);
-  const reverse = [...data].reverse();
-  // axios.get("http://52.79.235.129/api/post");
-  // console.log(axios.get("http://52.79.235.129/api/post"));
+  const reverse = [...data]
 
   const [loginCheck, setLoginCheck] = useState(true);
 

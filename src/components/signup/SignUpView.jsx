@@ -6,7 +6,6 @@ import {
 import { auth, db } from "../../shared/firebase";
 import { collection, addDoc } from "firebase/firestore";
 
-
 const SignUpView = () => {
   const id_ref = React.useRef();
   const name_ref = React.useRef();
@@ -25,9 +24,8 @@ const SignUpView = () => {
       name: name_ref.current.value,
     });
     console.log(user_data.id);
-  }
+  };
 
-  
   return (
     <div>
       아이디 : <input ref={id_ref} /> <br />
@@ -38,7 +36,7 @@ const SignUpView = () => {
   );
 };
 
-export const id_ref = "id_ref"
-export const pw_ref = "pw_ref"
+export const id_ref = "id_ref";
+export const pw_ref = "pw_ref";
 
 export default SignUpView;

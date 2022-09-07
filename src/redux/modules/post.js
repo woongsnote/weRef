@@ -19,7 +19,7 @@ export const getPosts = createAsyncThunk(
   "GET_ALL_POSTS",
   async (payload, thunkAPI) => {
     try {
-      const { data } = await axios.get(newBaseUrl);
+      const { data } = await axios.get(teamBaseURL);
       console.log(data.data)
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
@@ -53,6 +53,15 @@ export const postPosts = createAsyncThunk(
       const {data} = await axios.post(
         `${teamBaseLogedURL}`,payload
       );
+      // 토큰 테스트 후 리팩토링 예정
+      // const {data}= axios(
+      //   url: `${teamBaseLogedURL}`,
+      //   method: "POST",
+      //   data: payload,
+      //   headers:{
+      //   },
+      //   withCredentials: true,
+      // )
       console.log('data',data);
       return thunkAPI.fulfillWithValue(data)
     } catch (errer) {
@@ -66,7 +75,7 @@ export const deletePosts = createAsyncThunk(
   "DELETE_POSTS",
   async (payload, thunkAPI) => {
     try {
-      await axios.delete(`${baseURL}/${payload}`);
+      await axios.delete(`${teamBaseLogedURL}/${payload}`);
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -80,7 +89,7 @@ export const updatePosts = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const response = await axios.put(
-        `${baseURL}/${payload.id}`,
+        `${teamBaseLogedURL}/${payload.id}`,
         payload
       );
       console.log("response", response);

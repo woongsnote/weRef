@@ -88,7 +88,7 @@ export default function AddPost() {
   const fileChange = (fileBlob) => {
     const reader = new FileReader();
     reader.readAsDataURL(fileBlob);
-    console.log(fileBlob)
+    console.log(fileBlob);
     return new Promise((resolve) => {
       reader.onload = () => {
         setImgView(reader.result);
@@ -111,87 +111,63 @@ export default function AddPost() {
   let data = {
     title: title,
     description: description,
-    multipartFile: imgUrl,
-    referenceList: refUrl,
+    // multipartFile: imgUrl,
+    refUrl: refUrl,
   };
 
   const addPost = () => {
-    for (let i = 1; i <= 5; i++) {
-      if (document.getElementById(`${i}`) === null) {
-        break;
-      } else {
-        refUrl.push(document.getElementById(`${i}`).value);
+    if (title === "" || description === "") {
+      alert("제목/내용을 적어주세요!");
+    } else {
+      for (let i = 1; i <= 5; i++) {
+        if (document.getElementById(`${i}`) === null) {
+          break;
+        } else {
+          refUrl.push(document.getElementById(`${i}`).value);
+        }
       }
+
+      let formData = new FormData();
+
+      formData.append(
+        "requestDto",
+        new Blob([JSON.stringify(data)], { type: "application/json" })
+      );
+      formData.append("multipartFile", imgUrl);
+      // for (let i of formData.entries()) {
+      //   console.log(i);
+      // }
+      // console.log(formData);
+
+      const apiPost = {
+        url: "http://13.125.246.47:8080/api/auth/post",
+        method: "POST",
+        data: formData,
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization:
+            "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY2MjU2MzQ3NH0.ntv2Ikxj3m6QYo_bvD4wD9UZL-fyGJ5cg97j4GD4eLb6jG0XxklYr3SaD1xmrW4oNEjh6zKFPRLfoWqE7-5frg",
+          "Refresh-Token":
+            "eyJKV1RfSEVBREVSX1BBUkFNX1RZUEUiOiJoZWFkZXJUeXBlIiwiYWxnIjoiSFM1MTIifQ.eyJleHAiOjE2NjMxNjY0NzR9.1qzUQrpqrPnWzzG-YqwT9J-rxoGzagLPLkfF01_XyRaRPFNkw35AWV-N_RRzMkYVaTr0Wcz_xexhQZCD85gWew",
+        },
+        withCredentials: true,
+      };
+      axios(apiPost);
+      
+      
+      // yeB
+      // const header = {
+      //   'Content-Type':'multipart/form-data',
+      //   Authorization:"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY2MjU1NDU2MH0.bz92LjuUnbR_1vsoc3nnHyQzeFaOiSiwhU8mZ0w9_1hflB_2akxaE1R69eYhQf-myDY6soiVlNFaM1C-F3-7tA",
+      //   "Refresh-Token":
+      //       "eyJKV1RfSEVBREVSX1BBUkFNX1RZUEUiOiJoZWFkZXJUeXBlIiwiYWxnIjoiSFM1MTIifQ.eyJleHAiOjE2NjMxNTc1NjB9.Atxy67FGhcmJTF6_h_arcNG3DoJu-yood3NJpvXA7w10A2P_1phKIxYOCCwt1ajYcQ9pZoSJdX241kREMpYB5Q",
+      // }
+      // axios.post("http://13.125.246.47:8080/api/auth/post",{header,formData,withCredentials: true});
+
+      // dispatch(postPosts(data));
+      dispatch(getPosts());
+      navigate("/");
     }
-
-    let formData = new FormData();
-    formData.append("multipartFile", data);
-    for (let i of formData.entries()) {
-      console.log(i);
-    }
-    console.log(formData);
-    const apiPost = {
-      // url: "http://13.125.246.47:8080/api/auth/post",
-      url: "http://52.79.235.129/api/auth/post",
-      method: "post",
-      data: formData,
-      headers: {
-        "Content-Type": "multipart/form-data",
-        "Authorization":
-          "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY2MjUyMDE4Mn0.drfo-kWmyeVeDIU32VkJD-FqIB_nVGc3SHBeX8GS7qld2tuGEigIuIAwfhv6wQuq8WMUgIvC9Wi_urnrJcVa2Q",
-        "Refresh-Token":
-          "eyJKV1RfSEVBREVSX1BBUkFNX1RZUEUiOiJoZWFkZXJUeXBlIiwiYWxnIjoiSFM1MTIifQ.eyJleHAiOjE2NjMxMjMxODJ9.GgqLIcgi-ZpWGSjbTTqakV8Ok9_cg11rLjd9hbZWVc24mDsEqLgIT4MiA2zHsRMjscoRAw1UeNj8esCE972fOA",
-      },
-      withCredentials: true,
-    };
-    // axios.interceptor.request.use(()=>{})
-    axios(apiPost);
-
-    // dispatch(postPosts(data));
-    dispatch(getPosts());
-    navigate("/");
-
-    
-    // if (title === "" || description === "") {
-    //   alert("제목/내용을 적어주세요!");
-    // } else {
-    //   // console.log(imgUrl);
-
-    //   for (let i = 1; i <= 5; i++) {
-    //     if (document.getElementById(`${i}`) === null) {
-    //       break;
-    //     } else {
-    //       refUrl.push(document.getElementById(`${i}`).value);
-    //     }
-    //   }
-
-    //   let formData = new FormData();
-    //   formData.append("file", data);
-    //   // for (let i of formData.entries()) {
-    //   //   console.log(i);
-    //   // }
-    //   // console.log(formData);
-    //   const apiPost = {
-    //     // url: "http://13.125.246.47:8080/api/auth/post",
-    //     url: "http://52.79.235.129/api/auth/post",
-    //     method: "post",
-    //     data: formData,
-    //     headers: {
-    //       "content-Type": "multipart/form-data",
-    //       Authorization:
-    //         "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY2MjUyMDE4Mn0.drfo-kWmyeVeDIU32VkJD-FqIB_nVGc3SHBeX8GS7qld2tuGEigIuIAwfhv6wQuq8WMUgIvC9Wi_urnrJcVa2Q",
-    //       "Refresh-Token":
-    //         "eyJKV1RfSEVBREVSX1BBUkFNX1RZUEUiOiJoZWFkZXJUeXBlIiwiYWxnIjoiSFM1MTIifQ.eyJleHAiOjE2NjMxMjMxODJ9.GgqLIcgi-ZpWGSjbTTqakV8Ok9_cg11rLjd9hbZWVc24mDsEqLgIT4MiA2zHsRMjscoRAw1UeNj8esCE972fOA",
-    //     },
-    //     withCredentials: true,
-    //   };
-    //   // axios.interceptor.request.use(()=>{})
-    //   axios(apiPost);
-
-    //   // dispatch(postPosts(data));
-    //   dispatch(getPosts());
-    //   navigate("/");
-    // }
   };
 
   const goBack = () => {
@@ -201,7 +177,7 @@ export default function AddPost() {
   return (
     <>
       <Header />
-      <form className="addPost">
+      <form name="file" className="addPost">
         <div className="addPostTop">
           <div className="imgFile">
             <div>
