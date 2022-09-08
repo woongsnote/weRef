@@ -15,6 +15,7 @@ import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import Layout from "../components/layout/Layout";
 import DetailMenuButton from "../components/detail/DetailMenuButton";
+
 const Detail = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
