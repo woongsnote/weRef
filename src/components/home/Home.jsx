@@ -15,6 +15,8 @@ import Grid from "@mui/material/Grid";
 import axios from "axios";
 import { getPosts } from "../../redux/modules/post";
 
+import { accessToken, refreshToken } from "../../utils/tokens";
+
 export default function Home() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -24,9 +26,15 @@ export default function Home() {
   }, [dispatch]);
 
   const data = useSelector((state) => state.post.posts);
-  const reverse = [...data]
+  const newData = [...data];
 
   const [loginCheck, setLoginCheck] = useState(true);
+
+  useEffect(() => {
+    accessToken() === undefined ? setLoginCheck(false) : setLoginCheck(true);
+  }, [loginCheck]);
+
+  
 
   const goAddPost = () => {
     loginCheck === true ? navigate("/addPost") : alert("로그인 해주세요!");
@@ -52,7 +60,7 @@ export default function Home() {
           id="cardLayout"
           columnSpacing={{ md: -20 }}
         >
-          {reverse.map((item) => (
+          {newData.map((item) => (
             <HomeCrad
               key={item.id}
               id={item.id}
@@ -62,6 +70,7 @@ export default function Home() {
               imgUrl={item.imgUrl}
               cntHeart={item.cntHeart}
               referenceList={item.referenceList}
+              createAt={item.createAt}
             />
           ))}
         </Grid>

@@ -15,6 +15,8 @@ import Button from "@mui/material/Button";
 import CloseIcon from "@mui/icons-material/Close";
 import { AltRoute } from "@mui/icons-material";
 
+import { accessToken, refreshToken } from "../../utils/tokens";
+
 const AddLinks = () => {
   const [refLinks, setRefLinks] = useState([]);
   const [inputText, setInputText] = useState("");
@@ -111,7 +113,6 @@ export default function AddPost() {
   let data = {
     title: title,
     description: description,
-    // multipartFile: imgUrl,
     refUrl: refUrl,
   };
 
@@ -134,10 +135,6 @@ export default function AddPost() {
         new Blob([JSON.stringify(data)], { type: "application/json" })
       );
       formData.append("multipartFile", imgUrl);
-      // for (let i of formData.entries()) {
-      //   console.log(i);
-      // }
-      // console.log(formData);
 
       const apiPost = {
         url: "http://13.125.246.47:8080/api/auth/post",
@@ -145,26 +142,13 @@ export default function AddPost() {
         data: formData,
         headers: {
           "Content-Type": "multipart/form-data",
-          Authorization:
-            "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY2MjU2MzQ3NH0.ntv2Ikxj3m6QYo_bvD4wD9UZL-fyGJ5cg97j4GD4eLb6jG0XxklYr3SaD1xmrW4oNEjh6zKFPRLfoWqE7-5frg",
-          "Refresh-Token":
-            "eyJKV1RfSEVBREVSX1BBUkFNX1RZUEUiOiJoZWFkZXJUeXBlIiwiYWxnIjoiSFM1MTIifQ.eyJleHAiOjE2NjMxNjY0NzR9.1qzUQrpqrPnWzzG-YqwT9J-rxoGzagLPLkfF01_XyRaRPFNkw35AWV-N_RRzMkYVaTr0Wcz_xexhQZCD85gWew",
+          "Authorization": accessToken(),
+          "Refresh-Token": refreshToken(),
         },
         withCredentials: true,
       };
       axios(apiPost);
-      
-      
-      // yeB
-      // const header = {
-      //   'Content-Type':'multipart/form-data',
-      //   Authorization:"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY2MjU1NDU2MH0.bz92LjuUnbR_1vsoc3nnHyQzeFaOiSiwhU8mZ0w9_1hflB_2akxaE1R69eYhQf-myDY6soiVlNFaM1C-F3-7tA",
-      //   "Refresh-Token":
-      //       "eyJKV1RfSEVBREVSX1BBUkFNX1RZUEUiOiJoZWFkZXJUeXBlIiwiYWxnIjoiSFM1MTIifQ.eyJleHAiOjE2NjMxNTc1NjB9.Atxy67FGhcmJTF6_h_arcNG3DoJu-yood3NJpvXA7w10A2P_1phKIxYOCCwt1ajYcQ9pZoSJdX241kREMpYB5Q",
-      // }
-      // axios.post("http://13.125.246.47:8080/api/auth/post",{header,formData,withCredentials: true});
 
-      // dispatch(postPosts(data));
       dispatch(getPosts());
       navigate("/");
     }
@@ -181,7 +165,6 @@ export default function AddPost() {
         <div className="addPostTop">
           <div className="imgFile">
             <div>
-              <label htmlFor="inputFile">사진 추가 +</label>
               <input
                 id="inputFile"
                 type="file"
@@ -195,6 +178,7 @@ export default function AddPost() {
               />
             </div>
             <img src={imgView} />
+                  <label htmlFor="inputFile">사진 추가 +</label>
             <span onClick={deleteImg}>제거하기</span>
           </div>
           <div className="linkUrls">

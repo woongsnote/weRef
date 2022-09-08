@@ -8,25 +8,38 @@ import axios from "axios";
 
 import { getPosts } from "../../redux/modules/post";
 import { updatePosts } from "../../redux/modules/post";
+import { accessToken, refreshToken } from "../../utils/tokens";
 
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import CloseIcon from "@mui/icons-material/Close";
 
-
 const AddLinks = () => {
-  const dispatch = useDispatch()
-  const param = useParams()
+  const dispatch = useDispatch();
+  const param = useParams();
 
   const [refLinks, setRefLinks] = useState([]);
   const [inputText, setInputText] = useState("");
   const [nextId, setNextId] = useState(1);
 
   const [getRef, setGetRef] = useState();
-  
+
+  useEffect(() => {
+    dispatch(getPosts());
+    return () => {};
+  }, [dispatch]);
+
   const data = useSelector((state) => state.post.posts);
-  const editData = [...data].filter((item)=>item.id === parseInt(param.id))
-  
+  const editData = [...data].filter(
+    (item) => item.id === parseInt(param.id)
+  )[0];
+
+  // useEffect(() => {
+  //   setRefLinks(editData)
+  // }, []);
+  console.log(data);
+  console.log(editData);
+  console.log(refLinks);
 
   const handleChange = (e) => setInputText(e.target.value);
   const handleClick = () => {
@@ -75,9 +88,6 @@ const AddLinks = () => {
   );
 };
 
-
-
-
 export default function EditPost() {
   const navigate = useNavigate();
   const param = useParams();
@@ -88,11 +98,24 @@ export default function EditPost() {
   const [description, setDescription] = useState("");
   const [imgUrl, setImgUrl] = useState([]);
   const [getRef, setGetRef] = useState([]);
-  
+
   const data = useSelector((state) => state.post.posts);
-  const editData = [...data].filter((item)=>item.id === parseInt(param.id))
-  
-  // Detail=> props 처리 예정
+  const editData = [...data].filter(
+    (item) => item.id === parseInt(param.id)
+  )[0];
+
+  console.log(data);
+  console.log(editData);
+
+  useEffect(() => {
+    dispatch(getPosts());
+    return () => {
+      setTitle(editData.title);
+      setDescription(editData.description);
+      setImgUrl(editData.imgUrl);
+      setImgView(editData.imgUrl);
+    };
+  }, []);
 
   const titleHandle = (e) => {
     setTitle(e.target.value);
@@ -126,37 +149,15 @@ export default function EditPost() {
   let refUrl = [];
 
   let newData = {
-    userId: userId,
     title: title,
     description: description,
-    author: "author",
-    imgUrl: "",
-    cntHeart: 0,
-    referenceList: refUrl,
-    id: param.id,
+    refUrl: refUrl,
   };
 
   const eidtPost = () => {
     if (title === "" || description === "") {
       alert("제목/내용을 적어주세요!");
     } else {
-      // console.log(imgUrl);
-      let formData = new FormData();
-      formData.append("file", imgUrl);
-      // for (let i of formData.entries()) {
-      //   console.log(i);
-      // }
-      // console.log(formData);
-      const apiPost = {
-        url: "3001/api/auth/image",
-        method: "post",
-        data: formData,
-        headers: {
-          "content-Type": "multipart/form-data",
-        },
-      };
-      axios(apiPost);
-
       for (let i = 1; i <= 5; i++) {
         if (document.getElementById(`${i}`) === null) {
           break;
@@ -164,8 +165,31 @@ export default function EditPost() {
           refUrl.push(document.getElementById(`${i}`).value);
         }
       }
+      // for (let i of formData.entries()) {
+      //   console.log(i);
+      // }
+      // console.log(formData);
+      let formData = new FormData();
 
-      dispatch(updatePosts(newData));
+      formData.append(
+        "requestDto",
+        new Blob([JSON.stringify(newData)], { type: "application/json" })
+      );
+      formData.append("multipartFile", imgUrl);
+
+      const apiPost = {
+        url: `http://13.125.246.47:8080/api/auth/post/${param.id}`,
+        method: "PUT",
+        data: formData,
+        headers: {
+          "content-Type": "multipart/form-data",
+          Authorization: accessToken(),
+          "Refresh-Token": refreshToken(),
+        },
+        withCredentials: true,
+      };
+      axios(apiPost);
+
       dispatch(getPosts());
       navigate("/");
     }
@@ -181,7 +205,6 @@ export default function EditPost() {
       <form className="addPost">
         <div className="addPostTop">
           <div className="imgFile">
-            <label htmlFor="inputFile">사진 추가 +</label>
             <input
               id="inputFile"
               type="file"
@@ -194,11 +217,12 @@ export default function EditPost() {
               }}
             />
             <img src={imgView} />
+            <label htmlFor="inputFile">사진 추가 +</label>
             <span onClick={deleteImg}>제거</span>
           </div>
           <div className="linkUrls">
             <div className="refLinks">
-              <AddLinks/>
+              <AddLinks />
             </div>
           </div>
         </div>
@@ -215,8 +239,6 @@ export default function EditPost() {
           <br />
           <TextField
             id="description"
-            label=""
-            placeholder=""
             multiline
             inputProps={{ maxLength: 300 }}
             onChange={descriptionHandle}

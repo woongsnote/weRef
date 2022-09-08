@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { accessToken, refreshToken } from "../../utils/tokens";
 
 /* InitialState */
 // data, isLoading, error로 상태관리
@@ -9,39 +10,51 @@ const initialState = {
   error: null,
 };
 
-
-const baseURL = "http://localhost:3001/data"
-const baseHeartURL = "http://localhost:3001/api/auth/heart/"
+const baseURL = "http://localhost:3001/data";
+const baseHeartURL = "http://localhost:3001/api/auth/heart/";
 //   'http://localhost:3001/heart/${postId}' delete URL
 /* Thunk function */
-
 
 // [POST]
 export const addHeart = createAsyncThunk(
   "POST_HEART",
   async (payload, thunkAPI) => {
     try {
-      const {data} = await axios.post(
-        `${baseHeartURL}`,
-            payload
-      );
-      console.log('data',data);
-      return thunkAPI.fulfillWithValue(data)
+      const { data } = await axios({
+        url: `${baseHeartURL}${payload.id}`,
+        method: "POST",
+        data: payload,
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: accessToken(),
+          "Refresh-Token": refreshToken(),
+        },
+        withCredentials: true,
+      });
+      console.log("data", data);
+      return thunkAPI.fulfillWithValue(data);
     } catch (errer) {
-      return thunkAPI.rejectWithValue(errer)
+      return thunkAPI.rejectWithValue(errer);
     }
   }
-)
+);
 
 // [UPDATE]
 export const updateHeart = createAsyncThunk(
   "UPDATAE_HEART",
   async (payload, thunkAPI) => {
     try {
-      const response = await axios.put(
-        `${baseHeartURL}/${payload.id}`,
-        payload.cntHeart
-      );
+      const response = await axios({
+        url: `${baseHeartURL}${payload.id}`,
+        method: "PUT",
+        data: payload,
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: accessToken(),
+          "Refresh-Token": refreshToken(),
+        },
+        withCredentials: true,
+      });
       console.log("response", response);
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
@@ -55,14 +68,23 @@ export const deleteHeart = createAsyncThunk(
   "DELETE_HEART",
   async (payload, thunkAPI) => {
     try {
-      await axios.delete(`${baseHeartURL}/${payload}`);
+      await axios({
+        url: `${baseHeartURL}${payload.id}`,
+        method: "DELETE",
+        data: payload,
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: accessToken(),
+          "Refresh-Token": refreshToken(),
+        },
+        withCredentials: true,
+      });
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
-
 
 /* createSlice */
 export const heartSlice = createSlice({
@@ -82,7 +104,6 @@ export const heartSlice = createSlice({
       state.isLoading = true;
     },
 
-    
     /* Fulfilled */
     [addHeart.fulfilled]: (state, action) => {
       state.isLoading = false;

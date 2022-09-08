@@ -9,10 +9,8 @@ import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
-import Avatar from "@mui/material/Avatar";
 import CardActions from "@mui/material/CardActions";
 import IconButton from "@mui/material/IconButton";
-import { red } from "@mui/material/colors";
 import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
@@ -21,17 +19,21 @@ import { updateHeart, addHeart, deleteHeart } from "../../redux/modules/heart";
 
 import { useEffect } from "react";
 
+import { accessToken } from "../../utils/tokens";
+
 const LikeIcon = (props) => {
   const dispatch = useDispatch();
 
   const [liked, setLiked] = useState(false);
   const [likeNum, setLikeNum] = useState(0);
+  const [loginCheck, setLoginCheck] = useState(true);
 
   const data = useSelector((state) => state.post.posts);
   const newData = [...data].filter((item) => item.id === props.id)[0];
 
   useEffect(() => {
     setLikeNum(newData.cntHeart);
+    accessToken() === undefined ? setLoginCheck(false) : setLoginCheck(true);
   }, []);
 
   const btnPush = () => {
@@ -43,7 +45,7 @@ const LikeIcon = (props) => {
       imgUrl: newData.imgUrl,
       createAt: newData.createAt,
       modifiedAt: newData.modifiedAt,
-      referenceList: newData.referenceList,
+      refUrl: newData.referenceList,
       cntHeart: likeNum,
       id: newData.id,
     };
@@ -52,18 +54,22 @@ const LikeIcon = (props) => {
       id: newData.id,
     };
 
-    if (liked === false) {
-      setLiked(true);
-      setLikeNum(likeNum + 1);
-      putData.cntHeart = likeNum + 1;
-      dispatch(updateHeart(putData));
-      dispatch(addHeart(postHeart));
+    if (loginCheck === false) {
+      alert("로그인 해주세요!");
     } else {
-      setLiked(false);
-      setLikeNum(likeNum - 1);
-      putData.cntHeart = likeNum - 1;
-      dispatch(updateHeart(putData));
-      dispatch(deleteHeart(postHeart));
+      if (liked === false) {
+        setLiked(true);
+        setLikeNum(likeNum + 1);
+        putData.cntHeart = likeNum + 1;
+        dispatch(updateHeart(putData));
+        dispatch(addHeart(postHeart));
+      } else {
+        setLiked(false);
+        setLikeNum(likeNum - 1);
+        putData.cntHeart = likeNum - 1;
+        dispatch(updateHeart(putData));
+        dispatch(deleteHeart(postHeart));
+      }
     }
   };
 
@@ -89,6 +95,7 @@ export { LikeIcon };
 export default function HomeCrad(props) {
   const navigate = useNavigate();
 
+
   const goDetail = () => {
     navigate(`/detail/${props.id}`);
   };
@@ -100,7 +107,7 @@ export default function HomeCrad(props) {
           <CardHeader
             // avatar={<Avatar sx={{ bgcolor: red[10] }} src="img" />}
             title={props.author}
-            subheader="September 14, 2016"
+            subheader=""
           />
           <Typography>{props.title}</Typography>
           <CardMedia
@@ -114,7 +121,7 @@ export default function HomeCrad(props) {
           />
           <CardContent>
             <Typography variant="body2" color="text.secondary">
-              {props.description}
+              {props.description.length>45 ? props.description.substring(0,45)+"...":props.description}
               {/* 40자까지 미리보기 예정 */}
             </Typography>
           </CardContent>
