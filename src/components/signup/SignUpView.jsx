@@ -9,7 +9,6 @@ import { createUserThunk } from "../../redux/modules/users";
 import { useDispatch } from "react-redux";
 
 
-
 const SignUpView = () => {
   const dispatch = useDispatch()
 
@@ -27,12 +26,12 @@ const SignUpView = () => {
       {
       user_id: id_ref.current.value,
       name: name_ref.current.value,
-      }
-      )
-    )  
-  }
-  // console.log(id_ref.current.value)
-  
+
+    }));
+    // console.log(user_data.id);
+  };
+
+
   return (
     <div>
       username : <input ref={usernameInput} /> <br />
@@ -44,10 +43,9 @@ const SignUpView = () => {
   );
 };
 
-// export const id_ref = "id_reffff"
-// export const pw_ref = "pw_ref"
-// export const name_ref = "name_ref"
-// export {usernameInput, nameInput, passwordInput}
+
+export const id_ref = "id_ref";
+export const pw_ref = "pw_ref";
 
 
 export default SignUpView;

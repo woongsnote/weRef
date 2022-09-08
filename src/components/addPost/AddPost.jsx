@@ -1,10 +1,10 @@
+import AddPostStyle from "./AddPostStyle.css";
 import React from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import Header from "../header/Header";
-import AddPostStyle from "./AddPostStyle.css";
 
 import axios from "axios";
 // import { postPosts } from "../../redux/modules/post";
@@ -14,7 +14,9 @@ import { getPosts, postPosts } from "../../redux/modules/posts";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import CloseIcon from "@mui/icons-material/Close";
-import { AltRoute } from "@mui/icons-material";
+
+
+import { accessToken, refreshToken } from "../../utils/tokens";
 
 const AddLinks = () => {
   const [refLinks, setRefLinks] = useState([]);
@@ -112,86 +114,45 @@ export default function AddPost() {
   let data = {
     title: title,
     description: description,
-    multipartFile: imgUrl,
-    referenceList: refUrl,
+    refUrl: refUrl,
   };
 
   const addPost = () => {
-    for (let i = 1; i <= 5; i++) {
-      if (document.getElementById(`${i}`) === null) {
-        break;
-      } else {
-        refUrl.push(document.getElementById(`${i}`).value);
+    if (title === "" || description === "") {
+      alert("제목/내용을 적어주세요!");
+    } else {
+      for (let i = 1; i <= 5; i++) {
+        if (document.getElementById(`${i}`) === null) {
+          break;
+        } else {
+          refUrl.push(document.getElementById(`${i}`).value);
+        }
       }
+
+      let formData = new FormData();
+
+      formData.append(
+        "requestDto",
+        new Blob([JSON.stringify(data)], { type: "application/json" })
+      );
+      formData.append("multipartFile", imgUrl);
+
+      const apiPost = {
+        url: "http://13.125.246.47:8080/api/auth/post",
+        method: "POST",
+        data: formData,
+        headers: {
+          "Content-Type": "multipart/form-data",
+          "Authorization": accessToken(),
+          "Refresh-Token": refreshToken(),
+        },
+        withCredentials: true,
+      };
+      axios(apiPost);
+
+      dispatch(getPosts());
+      navigate("/");
     }
-
-    let formData = new FormData();
-    formData.append("multipartFile", data);
-    for (let i of formData.entries()) {
-      console.log(i);
-    }
-    console.log(formData);
-    const apiPost = {
-      // url: "http://13.125.246.47:8080/api/auth/post",
-      url: "http://52.79.235.129/api/auth/post",
-      method: "post",
-      data: formData,
-      headers: {
-        "Content-Type": "multipart/form-data",
-        Authorization:
-          "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY2MjUyMDE4Mn0.drfo-kWmyeVeDIU32VkJD-FqIB_nVGc3SHBeX8GS7qld2tuGEigIuIAwfhv6wQuq8WMUgIvC9Wi_urnrJcVa2Q",
-        "Refresh-Token":
-          "eyJKV1RfSEVBREVSX1BBUkFNX1RZUEUiOiJoZWFkZXJUeXBlIiwiYWxnIjoiSFM1MTIifQ.eyJleHAiOjE2NjMxMjMxODJ9.GgqLIcgi-ZpWGSjbTTqakV8Ok9_cg11rLjd9hbZWVc24mDsEqLgIT4MiA2zHsRMjscoRAw1UeNj8esCE972fOA",
-      },
-      withCredentials: true,
-    };
-    // axios.interceptor.request.use(()=>{})
-    axios(apiPost);
-
-    // dispatch(postPosts(data));
-    dispatch(getPosts());
-    navigate("/");
-
-    // if (title === "" || description === "") {
-    //   alert("제목/내용을 적어주세요!");
-    // } else {
-    //   // console.log(imgUrl);
-
-    //   for (let i = 1; i <= 5; i++) {
-    //     if (document.getElementById(`${i}`) === null) {
-    //       break;
-    //     } else {
-    //       refUrl.push(document.getElementById(`${i}`).value);
-    //     }
-    //   }
-
-    //   let formData = new FormData();
-    //   formData.append("file", data);
-    //   // for (let i of formData.entries()) {
-    //   //   console.log(i);
-    //   // }
-    //   // console.log(formData);
-    //   const apiPost = {
-    //     // url: "http://13.125.246.47:8080/api/auth/post",
-    //     url: "http://52.79.235.129/api/auth/post",
-    //     method: "post",
-    //     data: formData,
-    //     headers: {
-    //       "content-Type": "multipart/form-data",
-    //       Authorization:
-    //         "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY2MjUyMDE4Mn0.drfo-kWmyeVeDIU32VkJD-FqIB_nVGc3SHBeX8GS7qld2tuGEigIuIAwfhv6wQuq8WMUgIvC9Wi_urnrJcVa2Q",
-    //       "Refresh-Token":
-    //         "eyJKV1RfSEVBREVSX1BBUkFNX1RZUEUiOiJoZWFkZXJUeXBlIiwiYWxnIjoiSFM1MTIifQ.eyJleHAiOjE2NjMxMjMxODJ9.GgqLIcgi-ZpWGSjbTTqakV8Ok9_cg11rLjd9hbZWVc24mDsEqLgIT4MiA2zHsRMjscoRAw1UeNj8esCE972fOA",
-    //     },
-    //     withCredentials: true,
-    //   };
-    //   // axios.interceptor.request.use(()=>{})
-    //   axios(apiPost);
-
-    //   // dispatch(postPosts(data));
-    //   dispatch(getPosts());
-    //   navigate("/");
-    // }
   };
 
   const goBack = () => {
@@ -201,11 +162,10 @@ export default function AddPost() {
   return (
     <>
       <Header />
-      <form className="addPost">
+      <form name="file" className="addPost">
         <div className="addPostTop">
           <div className="imgFile">
             <div>
-              <label htmlFor="inputFile">사진 추가 +</label>
               <input
                 id="inputFile"
                 type="file"
@@ -219,6 +179,7 @@ export default function AddPost() {
               />
             </div>
             <img src={imgView} />
+                  <label htmlFor="inputFile">사진 추가 +</label>
             <span onClick={deleteImg}>제거하기</span>
           </div>
           <div className="linkUrls">

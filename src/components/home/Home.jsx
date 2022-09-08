@@ -12,8 +12,9 @@ import { useDispatch, useSelector } from "react-redux";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 
-import axios from "axios";
-import { getPosts } from "../../redux/modules/posts";
+import { getPosts } from "../../redux/modules/post";
+
+import { accessToken } from "../../utils/tokens";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -23,13 +24,16 @@ export default function Home() {
     dispatch(getPosts());
   }, [dispatch]);
 
-  const data = useSelector((state) => state.posts.posts);
-  // console.log(data);
-  const reverse = [...data].reverse();
-  // axios.get("http://52.79.235.129/api/post");
-  // console.log(axios.get("http://52.79.235.129/api/post"));
+  const data = useSelector((state) => state.post.posts);
+  const newData = [...data];
 
   const [loginCheck, setLoginCheck] = useState(true);
+
+  useEffect(() => {
+    accessToken() === undefined ? setLoginCheck(false) : setLoginCheck(true);
+  }, [loginCheck]);
+
+  
 
   const goAddPost = () => {
     loginCheck === true ? navigate("/addPost") : alert("로그인 해주세요!");
@@ -55,7 +59,7 @@ export default function Home() {
           id="cardLayout"
           columnSpacing={{ md: -20 }}
         >
-          {reverse.map((item) => (
+          {newData.map((item) => (
             <HomeCard
               key={item.id}
               id={item.id}
@@ -64,7 +68,7 @@ export default function Home() {
               author={item.author}
               imgUrl={item.imgUrl}
               cntHeart={item.cntHeart}
-              referenceList={item.referenceList}
+              createAt={item.createAt}
             />
           ))}
         </Grid>
