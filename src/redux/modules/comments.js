@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { localAPI, commentsAPI } from "../../shared/api";
+import { commentsAPI } from "../../shared/api";
 
 const initialState = {
   comments: [],
