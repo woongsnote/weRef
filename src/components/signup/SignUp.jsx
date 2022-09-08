@@ -16,6 +16,8 @@ import Box from "@mui/material/Box";
 import axios from "axios";
 import "./SignUp.css";
 import FormControl from "@mui/material/FormControl";
+import { useNavigate } from "react-router-dom";
+// import {btn_google} from "../public/img/btn_google.png"
 
 export default function SignUp() {
   const dispatch = useDispatch();
@@ -26,29 +28,17 @@ export default function SignUp() {
   const [isUsername, setisUsername] = useState(false);
   const [isPassword, setIsPassword] = useState(false);
   const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
-  const [usernameMessage, setUsernameMessage] = useState("usernamemsgtest");
+  const [usernameMessage, setUsernameMessage] = useState("");
   const [passwordMessage, setPasswordMessage] = useState("");
   const [passwordConfirmMessage, setPasswordConfirmMessage] = useState("");
-
+  const [isUsernameOk, setIsUsernameOk] = useState("false");
+  const [isPasswordOk, setIsPasswordOk] = useState("false");
+  const navigate = useNavigate;
   // console.log(usernameInput)
   useEffect(() => {
     // dispatch(__deleteReviews())
     dispatch(createUserThunk());
   }, [dispatch]);
-
-  //   const usernameRegex =
-  //   /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/
-  //   const userCurrent = usernameInput.current.value
-  //   // const userCurrent = usernameInput
-  //   console.log(userCurrent)
-  // setisUsername(userCurrent)
-
-  // if (!usernameRegex.test(userCurrent)) {
-  //   setUsernameMessage('아이디 형식이 틀렸어요! 다시 확인해주세요 ㅜ ㅜ')
-  // } else {
-  //   setUsernameMessage('올바른 아이디 형식이에요 : )')
-  //   setisUsername(true)
-  // }
 
   const signupClickHandler = async () => {
     const newUser = {
@@ -59,8 +49,7 @@ export default function SignUp() {
       passwordConfirm: passwordConfirmInput.current.value,
     };
 
-    const usernameRegex =
-      /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    const usernameRegex = /^[A-Za-z0-9+]{3,13}$/;
     const userCurrent = usernameInput.current.value;
     // const userCurrent = usernameInput
     setisUsername(userCurrent);
@@ -72,73 +61,79 @@ export default function SignUp() {
       setUsernameMessage("아이디 형식이 틀렸어요! 다시 확인해주세요");
     } else {
       setUsernameMessage("올바른 아이디 형식이에요 : )");
-      // setisUsername(true)
+      setIsUsernameOk(true);
     }
 
-    axios({
-      id: nanoid(),
-      // url: "http://13.125.246.47:8080/api/member/signup",
-      url: "http://localhost:3001/users",
-      method: "POST",
-      data: newUser,
-      withCredentials: true,
-    });
+    const passwordRegex = /^[A-Za-z0-9+]{3,13}$/;
+    const PWCurrent = passwordInput.current.value;
+    setIsPassword(PWCurrent);
+
+    if (!passwordRegex.test(PWCurrent)) {
+      setPasswordMessage("비밀번호 형식이 틀렸어요! 다시 확인해주세요");
+    } else {
+      setPasswordMessage("올바른 비밀번호 형식이에요 : )");
+      setIsPasswordOk(true);
+    }
+    const PWConfirmCurrent = passwordConfirmInput.current.value;
+
+    // if( PWCurrent !== PWConfirmCurrent) {
+    // setPasswordConfirmMessage('비밀번호가 일치하는지 확인해주세요')
+    // }
+
+    if (isUsernameOk === true && isPasswordOk === true) {
+      axios({
+        // id:nanoid(),
+        url: "http://13.125.246.47:8080/api/member/signup",
+        // url: "http://localhost:3001/users",
+        method: "POST",
+        data: newUser,
+        withCredentials: true,
+      });
+    }
+    navigate(`/`);
     // dispatch(createUserThunk(newUser));
   };
 
   return (
     <div className="SignUp">
-      <div>
-        <Box
-          component="form"
-          sx={{
-            "& > :not(style)": { m: 2, width: "50ch" },
-          }}
-          noValidate
-          autoComplete="off"
-        >
-          {/* <TextField id="outlined-basic" label="Outlined" variant="outlined" />
-        <TextField id="filled-basic" label="Filled" variant="filled" /> */}
-          <TextField
-            id="standard-basic"
-            label="UserID"
-            variant="standard"
-            ref={usernameInput}
-            type="text"
-            onChange={usernameInput}
-          />
-          <TextField id="standard-basic" label="Password" variant="standard" />
-          <TextField
-            id="standard-basic"
-            label="PasswordConfirm"
-            variant="standard"
-          />
-        </Box>
-      </div>
+      <div></div>
       <div>
         {/* username : <input  type="text" /> <br /> */}
-        username : <input ref={usernameInput} type="text" /> <br />
-        <div>{usernameMessage}</div>
-        password : <input ref={passwordInput} type="password" /> <br />
-        passwordConfirm : <input ref={passwordConfirmInput} type="password" />
+        username :{" "}
+        <input
+          ref={usernameInput}
+          type="text"
+          placeholder="특수문자없이 3자리 이상, 13자리 미만"
+          size="35"
+        />{" "}
+        <br />
+        <div className="valid">{usernameMessage}</div>
+        password :{" "}
+        <input
+          ref={passwordInput}
+          type="password"
+          placeholder="특수문자없이 3자리 이상, 33자리 미만"
+          size="35"
+        />{" "}
+        <br />
+        <div className="valid">{passwordMessage}</div>
+        passwordConfirm :{" "}
+        <input
+          ref={passwordConfirmInput}
+          type="password"
+          placeholder="비밀번호와 같은 값을 입력해주세요"
+          size="27"
+        />
       </div>
       <div></div>
       <Button variant="contained" onClick={signupClickHandler}>
         회원가입
-      </Button>
-      {/* <button onClick={signupClickHandler}>회원가입</button> */}
-      {/* </BoxContainer>
-    </StylesProvider> */}
+      </Button>{" "}
+      <br />
+      {/* <a href="https://google.com"> */}
+      <a href="http://weref.vercel.app/login">
+        <img src="btn_google.png" href="http://weref.vercel.app/login" />
+      </a>
     </div>
   );
 }
-
-// const BoxContainer = styled.div `
-//   padding: 6px 12px;
-//   border-radius: 8px;
-//   font-size: 1rem;
-//   line-height: 1.5;
-//   border: 1px solid lightgray;
-//   color: gray;
-//   background: white;
-// `;
