@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getPost } from "../redux/modules/post";
@@ -10,19 +10,16 @@ import DetailContent from "../components/detail/DetailContent";
 import CommentList from "../components/comments/CommentList";
 import { getComments } from "../redux/modules/comments";
 import Loading from "../components/loading/Loading";
-import AddComment from "../components/comments/AddComment";
-
-// import { RESP } from "../shared/response";
 
 const Detail = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const navigate = useNavigate();
   const { post } = useSelector((state) => state.post);
+
   // const { commentList } = useSelector((state) => state.comments);
   //로그인한 사용자 ID(임시값)
   const currentUserId = "sang";
-  // const currentUserId = "";
   //데이터 가져오는 동안 로딩 처리
   const [isLoading, setLoading] = useState(true);
   //받아온 데이터 상태관리
@@ -39,7 +36,7 @@ const Detail = () => {
       // setData(post);
       setLoading(false);
     }, 1000);
-  }, []);
+  }, [dispatch, id]);
   // console.log(post);
   // console.log(data);
   // const links = data.referenceList;
@@ -51,11 +48,13 @@ const Detail = () => {
           alignItems: "flex-end",
           backgroundColor: "white",
           // width: "100%",
-        }}>
+        }}
+      >
         <Button
           onClick={() => {
             navigate(`/`);
-          }}>
+          }}
+        >
           이전으로
         </Button>
       </Box>
@@ -71,12 +70,14 @@ const Detail = () => {
           alignItems: "flex-end",
           backgroundColor: "white",
           // width: "100%",
-        }}>
+        }}
+      >
         {/* Edit page 이동(로그인 했을 때만 표시) */}
         <Button
           onClick={() => {
             navigate(`/editPost/${id}`);
-          }}>
+          }}
+        >
           수정하기
         </Button>
       </Box>
@@ -95,7 +96,8 @@ const Detail = () => {
           width: "100%",
           backgroundColor: "white",
           justifyContent: "flex-end",
-        }}>
+        }}
+      >
         <BackButton />
         {currentUserId === post.author ? <EditButton /> : null}
       </Box>
@@ -108,7 +110,6 @@ const Detail = () => {
         likes={post.cntHeart}
         links={post.referenceList}
       />
-      <AddComment postId={id} />
       <CommentList currentUserId={currentUserId} postId={id} />
     </>
   );

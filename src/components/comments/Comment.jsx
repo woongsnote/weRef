@@ -1,4 +1,4 @@
-/** 댓글 컴포넌트 */
+import { useState } from "react";
 import {
   Card,
   CardHeader,
@@ -14,24 +14,50 @@ import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import SaveRoundedIcon from "@mui/icons-material/SaveRounded";
 import UndoRoundedIcon from "@mui/icons-material/UndoRounded";
-import { useState } from "react";
+
 import { useDispatch } from "react-redux";
 import { deleteComment, updateComment } from "../../redux/modules/comments";
+import axios from "axios";
 
-const Comment = ({ author, comment, currentUserId, id }) => {
+const Comment = ({ author, comment, currentUserId, id, postId }) => {
   const [editMode, setEditMode] = useState(false);
   const [editComment, setEditComment] = useState(comment);
 
   const dispatch = useDispatch();
 
   /** 댓글 삭제 */
-  const onDelete = (_id) => {
-    dispatch(deleteComment(_id));
+  const onDelete = (id) => {
+    // dispatch(deleteComment(_id));
+    const apiPost = {
+      url: `http://13.125.246.47:8080/api/auth/comment/${postId}/${id}`,
+      method: "DELETE",
+      headers: {
+        // "Content-Type": "application/json",
+        Authorization: window.localStorage.accessToken,
+        "Refresh-Token": window.localStorage.refreshToken,
+      },
+      withCredentials: true,
+    };
+    console.log(apiPost);
+    axios(apiPost);
   };
 
   /** 댓글 수정 */
-  const onUpdate = (_id, _content) => {
-    dispatch(updateComment({ id: _id, content: _content }));
+  const onUpdate = (id, editComment) => {
+    // dispatch(updateComment({ id: _id, content: _content }));
+    const apiPost = {
+      url: `http://13.125.246.47:8080/api/auth/comment/edit/${id}`,
+      method: "PUT",
+      data: { comment: editComment },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: window.localStorage.accessToken,
+        "Refresh-Token": window.localStorage.refreshToken,
+      },
+      withCredentials: true,
+    };
+    console.log(apiPost);
+    axios(apiPost);
   };
 
   /** 댓글 내용 수정 감지 */

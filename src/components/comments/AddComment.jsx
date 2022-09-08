@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 
 import { useDispatch } from "react-redux";
@@ -47,17 +47,16 @@ const AddComment = ({ currentUserId, postId }) => {
       headers: {
         "Content-Type": "application/json",
         Authorization: window.localStorage.accessToken,
-
-        // "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY2MjU2ODIwNH0.SnIFHhjOg2VLCMxxrYGdd-UImZNE_Z94rllnseWfNClNrxE8Cx6VNXaj3f8dmSSpfh6GU3R_gr5e8x6Kf1__Kg",
         "Refresh-Token": window.localStorage.refreshToken,
-        // "eyJKV1RfSEVBREVSX1BBUkFNX1RZUEUiOiJoZWFkZXJUeXBlIiwiYWxnIjoiSFM1MTIifQ.eyJleHAiOjE2NjMxNzEyMDR9.yXlSZj-NtB7T6P0IBUMTNZMYwHwfOv5oQQta6virA7fd2amSC2homfEOdZ-a0WA-eTCm6BI9FBPQgqxUXWpWLg",
       },
       withCredentials: true,
     };
     console.log(apiPost);
     axios(apiPost);
 
-    //     // reset Input
+    // dispatch(addComment(postId, comment));
+
+    //     reset Input
     commentReset();
   };
   return currentUserId === "" ? (
@@ -71,7 +70,8 @@ const AddComment = ({ currentUserId, postId }) => {
         height: "5.5rem",
         alignItems: "center",
         justifyContent: "center",
-      }}>
+      }}
+    >
       <Typography>로그인 후 이용가능합니다.</Typography>
     </Box>
   ) : (
@@ -101,7 +101,8 @@ const AddComment = ({ currentUserId, postId }) => {
               border: "none",
               cursor: "pointer",
               color: "#1976d2",
-            }}>
+            }}
+          >
             {isLoading ? "추가 중..." : <AddBoxRoundedIcon />}
           </button>
         </Box>

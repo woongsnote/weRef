@@ -91,7 +91,18 @@ export const postAPI = {
 /** DESC: 댓글 API */
 export const commentsAPI = {
   /** DESC: 댓글 추가*/
-  addComment: (postId, comment) => api.post(`/auth/comment/${postId}`, comment), //
+  addComment: (postId, comment) =>
+    api.post(
+      `/auth/comment/${postId}`,
+      { comment },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: window.localStorage.accessToken,
+          "Refresh-Token": window.localStorage.refreshToken,
+        },
+      }
+    ), //
   /** DESC: 댓글 가져오기 */
   getComments: (postId) => api.get(`/auth/comment/${postId}`),
   //TODO

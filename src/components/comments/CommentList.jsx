@@ -1,4 +1,3 @@
-/** 댓글 리스트 */
 import { Box } from "@mui/material";
 import AddComment from "./AddComment";
 import Comment from "./Comment";
@@ -14,7 +13,7 @@ const CommentList = ({ postId, currentUserId }) => {
   // }, []);
 
   const { commentList } = useSelector((state) => state.comments);
-
+  console.log(commentList);
   return (
     <Box sx={{ border: "1px solid #eee" }} m={2} p={3} borderRadius={2}>
       {/* 새 댓글 추가 */}
@@ -30,6 +29,7 @@ const CommentList = ({ postId, currentUserId }) => {
             comment={comment.comment}
             currentUserId={currentUserId}
             id={comment.id}
+            postId={postId}
           />
         );
       })}
