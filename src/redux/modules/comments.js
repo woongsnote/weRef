@@ -10,9 +10,9 @@ const initialState = {
 /**Create Comment */
 export const addComment = createAsyncThunk(
   "addComment",
-  async (args, thunkAPI) => {
+  async (payload, thunkAPI) => {
     try {
-      const { data } = await commentsAPI.addComment(args);
+      const data = await commentsAPI.addComment(payload);
       console.log(data);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
@@ -105,14 +105,6 @@ export const commentsSlice = createSlice({
     },
     [deleteComment.fulfilled]: (state, action) => {
       state.isLoading = false;
-      const newState = state.commentList.map((comment) =>
-        action.payload.id === comment.id
-          ? { ...comment, body: action.payload.body }
-          : comment
-      );
-
-      state.commentList = newState;
-      return newState;
     },
     [deleteComment.rejected]: (state, action) => {
       state.isLoading = false;

@@ -1,10 +1,14 @@
-import React from "react";
 import { loginUserThunk } from "../../redux/modules/users";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import "./Login.css";
+import { Button } from "@mui/material";
 
 export default function Login() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [user_ID, setuser_ID] = useState({
     user_ID: "",
   });
@@ -19,12 +23,13 @@ export default function Login() {
         password: user_PW,
       })
     );
+    navigate("/");
   };
 
   console.log(user_PW);
 
   return (
-    <div>
+    <div className="Login">
       아이디 :
       <input
         type="text"
@@ -41,7 +46,9 @@ export default function Login() {
         }}
       />
       <br />
-      <button onClick={loginFB}>로그인</button>
+      <Button variant="contained" onClick={loginFB}>
+        로그인
+      </Button>
     </div>
   );
 }

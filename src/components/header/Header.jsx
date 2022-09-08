@@ -1,5 +1,3 @@
-import React from "react";
-
 import { useNavigate } from "react-router-dom";
 
 import { Button } from "@mui/material";
@@ -67,7 +65,7 @@ export default function Header() {
             }}
           ></IconButton>
           <Typography
-            style={{"cursor": "pointer"}}
+            style={{ cursor: "pointer" }}
             onClick={() => {
               navigate("/");
             }}

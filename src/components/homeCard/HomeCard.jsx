@@ -1,4 +1,3 @@
-import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -15,7 +14,9 @@ import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { useDispatch, useSelector } from "react-redux";
+
 import { addDelHeart,heartCheck } from "../../redux/modules/heart";
+
 
 
 import { useEffect } from "react";
@@ -29,14 +30,16 @@ const LikeIcon = (props) => {
 
   const [liked, setLiked] = useState(false);
   const [likeNum, setLikeNum] = useState(0);
+
   const [loginCheck, setLoginCheck] = useState(false);
   
   const heartData = useSelector((state)=>state.heart.hearts)
+
   useEffect(() => {
     setLikeNum(props.cntHeart);
     accessToken() === undefined ? setLoginCheck(false) : setLoginCheck(true);
     dispatch(heartCheck(props.id))
-    
+
   }, []);
   console.log(heartData)
   
@@ -113,7 +116,6 @@ export { LikeIcon };
 export default function HomeCard(props) {
   const navigate = useNavigate();
 
-
   const goDetail = () => {
     navigate(`/posts/${props.id}`);
   };
@@ -139,7 +141,9 @@ export default function HomeCard(props) {
           />
           <CardContent>
             <Typography variant="body2" color="text.secondary">
-              {props.description.length>45 ? props.description.substring(0,45)+"...":props.description}
+              {props.description.length > 45
+                ? props.description.substring(0, 45) + "..."
+                : props.description}
               {/* 40자까지 미리보기 예정 */}
             </Typography>
           </CardContent>

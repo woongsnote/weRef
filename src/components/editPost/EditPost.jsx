@@ -1,4 +1,3 @@
-import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
@@ -6,11 +5,9 @@ import Header from "../header/Header";
 
 import axios from "axios";
 
-
 import { getPosts } from "../../redux/modules/post";
 import { updatePosts } from "../../redux/modules/post";
 import { accessToken, refreshToken } from "../../utils/tokens";
-
 
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -119,16 +116,16 @@ export default function EditPost() {
 
   useEffect(() => {
     dispatch(getPosts());
-
   }, [dispatch]);
+
 
   const titleHandle = (e) => {
     setTitle(e.target.value);
-    console.log(title)
+    console.log(title);
   };
   const descriptionHandle = (e) => {
     setDescription(e.target.value);
-    console.log(description)
+    console.log(description);
   };
 
   // 이미지 미리보기

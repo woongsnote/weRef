@@ -1,4 +1,3 @@
-import React from "react";
 import { useState, useEffect } from "react";
 
 import "./HomeStyle.css";
@@ -35,8 +34,6 @@ export default function Home() {
     accessToken() === undefined ? setLoginCheck(false) : setLoginCheck(true);
   }, [loginCheck]);
 
-  
-
   const goAddPost = () => {
     loginCheck === true ? navigate("/addPost") : alert("로그인 해주세요!");
   };
@@ -44,6 +41,7 @@ export default function Home() {
   return (
     <>
       <Header />
+
       <div className="greeting">
         <h1>WEREF!</h1>
         <p>오늘은 무엇을 배웠나요?</p>

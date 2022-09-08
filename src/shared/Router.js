@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "../components/home/Home";
 import AddPost from "../components/addPost/AddPost";
@@ -12,7 +12,7 @@ import { auth } from "./firebase";
 import { onAuthStateChanged } from "firebase/auth";
 
 const Router = () => {
-  const [is_login, setIsLogin] = React.useState(false);
+  const [is_login, setIsLogin] = useState(false);
 
   // console.log(auth.currentUser);
 
@@ -24,7 +24,7 @@ const Router = () => {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     onAuthStateChanged(auth, loginCheck);
   }, []);
 

@@ -17,9 +17,9 @@ export const createUserThunk = createAsyncThunk(
   "users/createUserThunk",
   async (newUser, thunkAPI) => {
     try {
-      const data = await axios.post("https://localhost:3001/users", newUser);
-      // const token = generateJWTToken(newUser.email);
-      // setCookie("access_token", token);
+      // const data = await axios.post("http://localhost:3001/users", newUser);
+      const data = await axios.post("http://13.125.246.47:8080/api/member/signup", newUser);
+      console.log(data)
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -32,7 +32,7 @@ export const loginUserThunk = createAsyncThunk(
   async (userInfo, thunk) => {
     console.log("test");
     try {
-      const { data } =
+      const data =
         await // axios.post('http://localhost:3001/user/login', userInfo)
         axios
           .post("http://13.125.246.47:8080/api/member/login", userInfo)
@@ -52,7 +52,6 @@ export const loginUserThunk = createAsyncThunk(
               alert("이메일과 비밀번호를 확인해주세요.");
             }
           });
-      console.log(userInfo);
       console.log(data);
     } catch (error) {
       return thunk.rejectWithValue(error);
