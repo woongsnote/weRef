@@ -17,9 +17,9 @@ export const createUserThunk = createAsyncThunk(
   "users/createUserThunk",
   async (newUser, thunkAPI) => {
     try {
-      const data = await axios.post("https://localhost:3001/users", newUser);
-      // const token = generateJWTToken(newUser.email);
-      // setCookie("access_token", token);
+      // const data = await axios.post("http://localhost:3001/users", newUser);
+      const data = await axios.post("http://13.125.246.47:8080/api/member/signup", newUser);
+      console.log(data)
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
