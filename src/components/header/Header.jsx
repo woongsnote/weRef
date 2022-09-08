@@ -9,6 +9,46 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 
+import { useEffect, useState } from "react";
+
+export const LoginOut = () => {
+  const navigate = useNavigate();
+  const [loginCheck, setLoginCheck] = useState(true);
+
+  const removeToken = () => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    setLoginCheck(false);
+    navigate("/");
+  };
+
+  useEffect(() => {
+    window.localStorage.accessToken === undefined
+      ? setLoginCheck(false)
+      : setLoginCheck(true);
+  }, [loginCheck]);
+
+  if (loginCheck === false) {
+    return (
+      <Button
+        color="inherit"
+        onClick={() => {
+          navigate("/login");
+        }}
+      >
+        LOGIN
+      </Button>
+    );
+  }
+  if (loginCheck === true) {
+    return (
+      <Button color="inherit" onClick={removeToken}>
+        LOGOUT
+      </Button>
+    );
+  }
+};
+
 export default function Header() {
   const navigate = useNavigate();
 
@@ -26,17 +66,19 @@ export default function Header() {
               navigate("/");
             }}
           ></IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography
+            style={{"cursor": "pointer"}}
+            onClick={() => {
+              navigate("/");
+            }}
+            variant="h6"
+            component="div"
+            sx={{ flexGrow: 1 }}
+          >
             WeReF
           </Typography>
-          <Button
-            color="inherit"
-            onClick={() => {
-              navigate("/login");
-            }}
-          >
-            Login
-          </Button>
+
+          <LoginOut />
           <Button
             color="inherit"
             onClick={() => {
@@ -48,18 +90,5 @@ export default function Header() {
         </Toolbar>
       </AppBar>
     </Box>
-    //     <>
-
-    //         <ButtonGroup
-    //             disableElevation
-    //             variant="contained"
-    //             aria-label="Disabled elevation buttons"
-    //             >
-    //             <Button style={{"height":'40px'}}variant="contained">
-    //                     로그인
-    //             </Button>
-    //             <Button style={{"height":'40px'}}>회원가입</Button>
-    //         </ButtonGroup>
-    //   </>
   );
 }
