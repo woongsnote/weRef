@@ -1,70 +1,70 @@
-# Getting Started with Create React App
+# ⭐ WeRef ⭐
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 개요
 
-## Available Scripts
+- 개발 공부를 하면서 공부한 내용과 함께, 참고할 만한 reference 링크를 공유하는 서비스 입니다.
 
-In the project directory, you can run:
+## 프로젝트 내용
 
-### `yarn start`
+### 주제: weRef. we are Reference
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### 기간: 2022.09.02(금) - 2022.09.08(목)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 기능 구현
 
-### `yarn test`
+- 작성 : 글쓰기 - [로그인 유저 만 가능]
+  - **반드시 1장의 사진 추가? : BE에서 이미지 및 카드**
+  - **반드시 1개 이상의 관련 레퍼런스 추가**
+  - **반드시 학습 내용에 대한 설명 작성**
+- 게시물 좋아요
+- 게시물 댓글
+- 메인화면 column 4개
+- 회원 가입
+  - 일반 로그인
+    - username (중복 확인 필요 : BE)
+    - password (비밀번호 확인 및 비밀번호 체크 : FE)
+    - nickname (중복 확인 필요 : BE)
+    - E-mail (중복 확인 필요 : BE)
+- Home 화면 : 다른 사람과 공유됨
+  - 화면 상단에 본인 ID 및 로그아웃
+  - 화면 우측 글쓰기 버튼
+  - 게시글 클릭 시 : 상세 페이지로 이동
+    - 댓글
+      - 등록
+      - 수정
+      - 삭제
+    - 추천 ( 좋아요 )
+  - 기본 정렬 : 최신 날짜 순으로 정렬
+- 게시글 작성 화면
+  - 수정
+  - 삭제
+  - 사진
+  - 목표
+    - 학습내용 설명
+    - 레퍼런스 추천
+      - 추가
+      - 삭제
+      - (된다면 오지태그)
+- 상세 페이지
+  - 사진
+  - 학습내용 설명
+  - 레퍼런스
+  - 좋아요
+  - 댓글
+- Login.html
+  - ID
+  - PW
+  - 이메일
+  - 로그인하기 버튼
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 팀원별 역할
 
-### `yarn build`
+- 문지웅(FE): 상세 페이지 구현
+- 손다윤(FE): 회원가입 및 로그인 페이지 구현
+- 이요한(FE): 홈 화면 및 게시글 작성 페이지 구현
+- 이다정(BE): 게시글 관련 기능 및 레퍼런스/ 좋아요
+- 배상훈(BE): 로그인 및 소셜 로그인 구현
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 구현 결과
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+[바로가기](https://weref.vercel.app)
