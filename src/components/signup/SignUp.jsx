@@ -17,8 +17,6 @@ import axios from "axios";
 import "./SignUp.css";
 import FormControl from "@mui/material/FormControl";
 
-import React, { useEffect, useRef, useState } from "react";
-
 export default function SignUp() {
   const dispatch = useDispatch();
   const usernameInput = useRef(null);
@@ -106,6 +104,7 @@ export default function SignUp() {
             variant="standard"
             ref={usernameInput}
             type="text"
+            onChange={usernameInput}
           />
           <TextField id="standard-basic" label="Password" variant="standard" />
           <TextField
