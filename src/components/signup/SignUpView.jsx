@@ -1,4 +1,4 @@
-import {React, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
@@ -8,29 +8,25 @@ import { collection, addDoc } from "firebase/firestore";
 import { createUserThunk } from "../../redux/modules/users";
 import { useDispatch } from "react-redux";
 
-
 const SignUpView = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const id_ref = React.useRef();
-  const name_ref = React.useRef();
-  const pw_ref = React.useRef();  
+  const id_ref = useRef();
+  const name_ref = useRef();
+  const pw_ref = useRef();
   const usernameInput = useRef(null);
   const nameInput = useRef(null);
   const passwordInput = useRef(null);
 
-
   const signupFB = async () => {
     dispatch(
-    createUserThunk(    
-      {
-      user_id: id_ref.current.value,
-      name: name_ref.current.value,
-
-    }));
+      createUserThunk({
+        user_id: id_ref.current.value,
+        name: name_ref.current.value,
+      })
+    );
     // console.log(user_data.id);
   };
-
 
   return (
     <div>
@@ -43,9 +39,7 @@ const SignUpView = () => {
   );
 };
 
-
 export const id_ref = "id_ref";
 export const pw_ref = "pw_ref";
-
 
 export default SignUpView;

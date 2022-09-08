@@ -7,7 +7,7 @@ import { v4 as uuidV4 } from "uuid";
 import { useDispatch } from "react-redux";
 import { createUserThunk } from "../../redux/modules/users";
 import { nanoid } from "@reduxjs/toolkit";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@mui/material";
 import TextField from "@material-ui/core/TextField";
 import Box from "@mui/material/Box";
@@ -95,7 +95,8 @@ export default function SignUp() {
             "& > :not(style)": { m: 2, width: "50ch" },
           }}
           noValidate
-          autoComplete="off">
+          autoComplete="off"
+        >
           {/* <TextField id="outlined-basic" label="Outlined" variant="outlined" />
         <TextField id="filled-basic" label="Filled" variant="filled" /> */}
           <TextField

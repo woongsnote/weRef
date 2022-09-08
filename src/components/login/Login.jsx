@@ -1,10 +1,10 @@
-import React from "react";
 import { loginUserThunk } from "../../redux/modules/users";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 export default function Login() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [user_ID, setuser_ID] = useState({
     user_ID: "",
   });
@@ -19,6 +19,7 @@ export default function Login() {
         password: user_PW,
       })
     );
+    navigate("/");
   };
 
   console.log(user_PW);

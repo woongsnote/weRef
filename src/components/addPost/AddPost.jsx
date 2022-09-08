@@ -1,5 +1,5 @@
 import AddPostStyle from "./AddPostStyle.css";
-import React from "react";
+
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -7,14 +7,11 @@ import { useNavigate } from "react-router-dom";
 import Header from "../header/Header";
 
 import axios from "axios";
-// import { postPosts } from "../../redux/modules/post";
-// import { getPosts } from "../../redux/modules/post";
-import { getPosts, postPosts } from "../../redux/modules/posts";
+import { getPosts } from "../../redux/modules/posts";
 
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import CloseIcon from "@mui/icons-material/Close";
-
 
 import { accessToken, refreshToken } from "../../utils/tokens";
 
@@ -143,7 +140,7 @@ export default function AddPost() {
         data: formData,
         headers: {
           "Content-Type": "multipart/form-data",
-          "Authorization": accessToken(),
+          Authorization: accessToken(),
           "Refresh-Token": refreshToken(),
         },
         withCredentials: true,
@@ -179,7 +176,7 @@ export default function AddPost() {
               />
             </div>
             <img src={imgView} />
-                  <label htmlFor="inputFile">사진 추가 +</label>
+            <label htmlFor="inputFile">사진 추가 +</label>
             <span onClick={deleteImg}>제거하기</span>
           </div>
           <div className="linkUrls">
