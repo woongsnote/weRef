@@ -1,13 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { localAPI, postAPI } from "../../shared/api";
 import axios from "axios";
+
 import { accessToken ,refreshToken} from "../../utils/tokens";
 
 /* InitialState */
 // data, isLoading, error로 상태관리
-
 const initialState = {
-  post: {},
+  posts: [],
   isLoading: false,
   error: null,
 };
@@ -93,8 +92,9 @@ export const updatePosts = createAsyncThunk(
     }
   }
 );
+
 /* createSlice */
-export const postSlice = createSlice({
+export const postsSlice = createSlice({
   // 모듈 이름
   name: "posts",
   // 초기 상태값
@@ -152,5 +152,6 @@ export const postSlice = createSlice({
   },
 });
 
-export const {} = postSlice.actions;
-export default postSlice.reducer;
+/* export */
+export const {} = postsSlice.actions;
+export default postsSlice.reducer;

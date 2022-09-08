@@ -26,19 +26,12 @@ const SignUpView = () => {
       {
       user_id: id_ref.current.value,
       name: name_ref.current.value,
-<<<<<<< HEAD
-    });
-    console.log(user_data.id);
+
+    }));
+    // console.log(user_data.id);
   };
 
-=======
-      }
-      )
-    )  
-  }
-  // console.log(id_ref.current.value)
-  
->>>>>>> 8041aca6b620eb46cb5d7b7a03730b01bf6159e3
+
   return (
     <div>
       username : <input ref={usernameInput} /> <br />
@@ -50,15 +43,9 @@ const SignUpView = () => {
   );
 };
 
-<<<<<<< HEAD
+
 export const id_ref = "id_ref";
 export const pw_ref = "pw_ref";
-=======
-// export const id_ref = "id_reffff"
-// export const pw_ref = "pw_ref"
-// export const name_ref = "name_ref"
-// export {usernameInput, nameInput, passwordInput}
 
->>>>>>> 8041aca6b620eb46cb5d7b7a03730b01bf6159e3
 
 export default SignUpView;

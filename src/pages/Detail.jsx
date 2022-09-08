@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getPost } from "../redux/modules/post";
+import { getPosts } from "../redux/modules/post";
 
 import { Box, Button } from "@mui/material";
 
@@ -30,7 +30,7 @@ const Detail = () => {
   // const [comments, setComments] = useState([]);
 
   useEffect(() => {
-    dispatch(getPost(id));
+    dispatch(getPosts(id));
     dispatch(getComments(id));
 
     setTimeout(() => {

@@ -12,9 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 
-import axios from "axios";
-import { getPosts } from "../../redux/modules/posts";
-
+import { getPosts } from "../../redux/modules/post";
 
 import { accessToken } from "../../utils/tokens";
 
@@ -26,10 +24,8 @@ export default function Home() {
     dispatch(getPosts());
   }, [dispatch]);
 
-
   const data = useSelector((state) => state.post.posts);
   const newData = [...data];
-
 
   const [loginCheck, setLoginCheck] = useState(true);
 
@@ -63,11 +59,8 @@ export default function Home() {
           id="cardLayout"
           columnSpacing={{ md: -20 }}
         >
-
-
           {newData.map((item) => (
             <HomeCard
-
               key={item.id}
               id={item.id}
               title={item.title}
