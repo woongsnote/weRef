@@ -25,7 +25,7 @@ const Detail = () => {
 
   // const { commentList } = useSelector((state) => state.comments);
   //로그인한 사용자 ID(임시값)
-  const currentUserId = "sang";
+  const currentUserId = "test";
   //데이터 가져오는 동안 로딩 처리
   const [isLoading, setLoading] = useState(true);
 
