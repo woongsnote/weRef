@@ -33,8 +33,6 @@ export default function Home() {
     accessToken() === undefined ? setLoginCheck(false) : setLoginCheck(true);
   }, [loginCheck]);
 
-  
-
   const goAddPost = () => {
     loginCheck === true ? navigate("/addPost") : alert("로그인 해주세요!");
   };

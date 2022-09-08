@@ -107,8 +107,7 @@ export const commentsAPI = {
   getComments: (postId) => api.get(`/comment/${postId}`),
   //TODO
   /** DESC: 댓글 삭제 */
-  deleteComment: (postId, commentId) =>
-    api.delete(`/auth/comment/${postId}/${commentId}`),
+  deleteComment: (commentId) => api.delete(`/auth/comment/delete/${commentId}`),
   //TODO
   /** DESC: 댓글 편집 */
   editComment: (postId, commentId, comment) =>

@@ -52,7 +52,6 @@ export const loginUserThunk = createAsyncThunk(
               alert("이메일과 비밀번호를 확인해주세요.");
             }
           });
-      console.log(userInfo);
       console.log(data);
     } catch (error) {
       return thunk.rejectWithValue(error);
