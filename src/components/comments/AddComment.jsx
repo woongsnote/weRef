@@ -9,7 +9,7 @@ import AddBoxRoundedIcon from "@mui/icons-material/AddBoxRounded";
 
 import useInput from "../../hooks/useInput";
 
-const AddComment = ({ currentUserId, postId }) => {
+const AddComment = ({ currentUserId, postId, unknown }) => {
   const dispatch = useDispatch();
   //커스텀 훅(useInput) 사용
   const [comment, onChangeCommentHandler, commentReset] = useInput();
@@ -59,7 +59,7 @@ const AddComment = ({ currentUserId, postId }) => {
     //     reset Input
     commentReset();
   };
-  return currentUserId === "" ? (
+  return unknown === true ? (
     <Box
       sx={{
         textAlign: "center",

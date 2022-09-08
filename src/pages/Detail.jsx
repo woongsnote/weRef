@@ -15,6 +15,7 @@ import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import Layout from "../components/layout/Layout";
 import DetailMenuButton from "../components/detail/DetailMenuButton";
+import { accessToken, refreshToken } from "../utils/tokens";
 
 const Detail = () => {
   const dispatch = useDispatch();
@@ -28,10 +29,13 @@ const Detail = () => {
   //데이터 가져오는 동안 로딩 처리
   const [isLoading, setLoading] = useState(true);
 
+  const [unKnown, setUnKnown] = useState(true);
+
   useEffect(() => {
     dispatch(getPost(id));
     dispatch(getComments(id));
 
+    if (!accessToken === null || !refreshToken === null) setUnKnown(false);
     setTimeout(() => {
       setLoading(false);
     }, 1000);
@@ -87,7 +91,11 @@ const Detail = () => {
           likes={post.cntHeart}
           links={post.referenceList}
         />
-        <CommentList currentUserId={currentUserId} postId={id} />
+        <CommentList
+          currentUserId={currentUserId}
+          postId={id}
+          unKnown={unKnown}
+        />
       </Layout>
     </>
   );

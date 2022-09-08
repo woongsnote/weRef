@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getComments } from "../../redux/modules/comments";
-const CommentList = ({ postId, currentUserId }) => {
+const CommentList = ({ postId, currentUserId, unKnown }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -17,7 +17,11 @@ const CommentList = ({ postId, currentUserId }) => {
   return (
     <Box sx={{ border: "1px solid #eee" }} m={2} p={3} borderRadius={2}>
       {/* 새 댓글 추가 */}
-      <AddComment currentUserId={currentUserId} postId={postId} />
+      <AddComment
+        currentUserId={currentUserId}
+        postId={postId}
+        unKnown={unKnown}
+      />
       {/* 가져온 댓글 목록 */}
       <>
         {commentList.map((comment) => {
