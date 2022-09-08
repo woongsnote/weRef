@@ -1,29 +1,38 @@
-import { Box, Avatar, Typography, Input } from "@mui/material";
-// import AddBoxRoundedIcon from "@mui/icons-material/AddBoxRounded";
-import useInput from "../../hooks/useInput";
-import { useState } from "react";
-import { apis } from "../../shared/api";
+import React, { useState } from "react";
 
-const AddComment = ({ setComments, comments, currentUserId, postId }) => {
+import { useDispatch } from "react-redux";
+import { addComment } from "../../redux/modules/comments";
+
+import { Box, Avatar, Typography, Input } from "@mui/material";
+import AddBoxRoundedIcon from "@mui/icons-material/AddBoxRounded";
+
+import useInput from "../../hooks/useInput";
+
+const AddComment = ({ currentUserId, postId }) => {
+  const dispatch = useDispatch();
   //커스텀 훅(useInput) 사용
   const [comment, onChangeCommentHandler, commentReset] = useInput();
 
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState();
+  // const [error, setError] = useState();
 
-  const onSubmitCommentHandler = async (event) => {
+  /**댓글 추가 */
+  const onSubmitCommentHandler = (event) => {
+    //새로고침 방지
     event.preventDefault();
 
     try {
       if (comment === "") return;
-
       setIsLoading(true);
-
-      const { data } = await apis.addComment();
-
-      setComments([...comments, data]);
+      const data = {
+        post: postId,
+        username: currentUserId,
+        comment: comment,
+      };
+      console.log(data);
+      dispatch(addComment(data));
     } catch (error) {
-      setError(error);
+      // setError(error);
       console.log(error);
     } finally {
       setIsLoading(false);
@@ -73,10 +82,10 @@ const AddComment = ({ setComments, comments, currentUserId, postId }) => {
               backgroundColor: "white",
               border: "none",
               cursor: "pointer",
+              color: "#1976d2",
             }}
           >
-            {/* <AddBoxRoundedIcon /> */}
-            {isLoading ? "추가 중..." : "추가하기"}
+            {isLoading ? "추가 중..." : <AddBoxRoundedIcon />}
           </button>
         </Box>
       </form>

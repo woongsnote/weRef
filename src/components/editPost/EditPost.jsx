@@ -6,9 +6,11 @@ import Header from "../header/Header";
 
 import axios from "axios";
 
+
 import { getPosts } from "../../redux/modules/post";
 import { updatePosts } from "../../redux/modules/post";
 import { accessToken, refreshToken } from "../../utils/tokens";
+
 
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -109,12 +111,7 @@ export default function EditPost() {
 
   useEffect(() => {
     dispatch(getPosts());
-    // return () => {
-    //   setTitle(editData.title);
-    //   setDescription(editData.description);
-    //   setImgUrl(editData.imgUrl);
-    //   setImgView(editData.imgUrl);
-    // };
+
   }, []);
 
   const titleHandle = (e) => {

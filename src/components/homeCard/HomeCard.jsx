@@ -15,8 +15,13 @@ import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { useDispatch, useSelector } from "react-redux";
+<<<<<<< HEAD:src/components/homeCard/HomeCrad.jsx
 import { updateHeart, addDelHeart,heartCheck } from "../../redux/modules/heart";
 
+=======
+import { updatePosts } from "../../redux/modules/posts";
+import { updateHeart, addHeart, deleteHeart } from "../../redux/modules/heart";
+>>>>>>> 8041aca6b620eb46cb5d7b7a03730b01bf6159e3:src/components/homeCard/HomeCard.jsx
 
 import { useEffect } from "react";
 
@@ -29,7 +34,7 @@ const LikeIcon = (props) => {
   const [likeNum, setLikeNum] = useState(0);
   const [loginCheck, setLoginCheck] = useState(true);
 
-  const data = useSelector((state) => state.post.posts);
+  const data = useSelector((state) => state.posts.posts);
   const newData = [...data].filter((item) => item.id === props.id)[0];
   
   const heartData = useSelector((state)=>state.heart)
@@ -99,12 +104,12 @@ const LikeIcon = (props) => {
 };
 export { LikeIcon };
 
-export default function HomeCrad(props) {
+export default function HomeCard(props) {
   const navigate = useNavigate();
 
 
   const goDetail = () => {
-    navigate(`/detail/${props.id}`);
+    navigate(`/posts/${props.id}`);
   };
 
   return (

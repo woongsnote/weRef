@@ -7,8 +7,9 @@ import { useNavigate } from "react-router-dom";
 import Header from "../header/Header";
 
 import axios from "axios";
-import { postPosts } from "../../redux/modules/post";
-import { getPosts } from "../../redux/modules/post";
+// import { postPosts } from "../../redux/modules/post";
+// import { getPosts } from "../../redux/modules/post";
+import { getPosts, postPosts } from "../../redux/modules/posts";
 
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";

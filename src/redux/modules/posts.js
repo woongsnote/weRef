@@ -1,29 +1,26 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { localAPI, postAPI } from "../../shared/api";
 import axios from "axios";
-import { accessToken ,refreshToken} from "../../utils/tokens";
 
 /* InitialState */
 // data, isLoading, error로 상태관리
-
 const initialState = {
-  post: {},
+  posts: [],
   isLoading: false,
   error: null,
 };
 
-const baseURL = "http://localhost:3001/data"
-const teamBaseURL = "http://13.125.246.47:8080/api/post"
-const teamBaseLogedURL = "http://13.125.246.47:8080/api/auth/post"
-const newBaseUrl = "http://52.79.235.129/api/post"
+const baseURL = "http://localhost:3001/data";
+const teamBaseURL = "http://13.125.246.47:8080/api/post";
+const teamBaseLogedURL = "http://13.125.246.47:8080/api/post";
+const newBaseURL = "http://52.79.235.129/api/post";
 /* Thunk function */
 // [GET - 데이터 전체 조회]
 export const getPosts = createAsyncThunk(
   "GET_ALL_POSTS",
   async (payload, thunkAPI) => {
     try {
-      const { data } = await axios.get(teamBaseURL);
-      console.log(data.data)
+      const { data } = await axios.get(teamBaseLogedURL);
+      console.log(data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -36,9 +33,7 @@ export const eachPosts = createAsyncThunk(
   "EACH_POSTS",
   async (payload, thunkAPI) => {
     try {
-      const { data } = await axios.get(
-        `${baseURL}/${payload}`
-      );
+      const { data } = await axios.get(`${baseURL}/${payload}`);
       console.log("data", data);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
@@ -47,29 +42,26 @@ export const eachPosts = createAsyncThunk(
   }
 );
 
-
 // [POST]
 export const postPosts = createAsyncThunk(
   "POST_POSTS",
   async (payload, thunkAPI) => {
     try {
-      const {data} = await axios.post(
-        `${teamBaseLogedURL}`,payload
-      );
-      console.log('data',data);
-      return thunkAPI.fulfillWithValue(data)
+      const { data } = await axios.post(`${teamBaseLogedURL}`, payload);
+      console.log("data", data);
+      return thunkAPI.fulfillWithValue(data);
     } catch (errer) {
-      return thunkAPI.rejectWithValue(errer)
+      return thunkAPI.rejectWithValue(errer);
     }
   }
-)
+);
 
 // [DELETE]
 export const deletePosts = createAsyncThunk(
   "DELETE_POSTS",
   async (payload, thunkAPI) => {
     try {
-      await axios.delete(`${teamBaseLogedURL}/${payload}`);
+      await axios.delete(`${baseURL}/${payload}`);
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -82,10 +74,7 @@ export const updatePosts = createAsyncThunk(
   "UPDATAE_POSTS",
   async (payload, thunkAPI) => {
     try {
-      const response = await axios.put(
-        `${teamBaseLogedURL}/${payload.id}`,
-        payload
-      );
+      const response = await axios.put(`${baseURL}/${payload.id}`, payload);
       console.log("response", response);
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
@@ -93,8 +82,9 @@ export const updatePosts = createAsyncThunk(
     }
   }
 );
+
 /* createSlice */
-export const postSlice = createSlice({
+export const postsSlice = createSlice({
   // 모듈 이름
   name: "posts",
   // 초기 상태값
@@ -110,7 +100,7 @@ export const postSlice = createSlice({
     [eachPosts.pending]: (state, action) => {
       state.isLoading = true;
     },
-    
+
     /* Fulfilled */
     [getPosts.fulfilled]: (state, action) => {
       state.isLoading = false;
@@ -145,12 +135,9 @@ export const postSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
-    [updatePosts.rejected]: (state, action) => {
-      state.isLoading = false;
-      state.error = action.payload;
-    },
   },
 });
 
-export const {} = postSlice.actions;
-export default postSlice.reducer;
+/* export */
+export const {} = postsSlice.actions;
+export default postsSlice.reducer;

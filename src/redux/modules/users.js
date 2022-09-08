@@ -60,25 +60,6 @@ export const loginUserThunk = createAsyncThunk(
   }
 );
 
-// const onLogin = () => {
-//   axios
-//     .post("http://3.34.48.111/api/member/login", {
-//       email: email.current.value,
-//       password: password.current.value,
-//     })
-//     .then((response) => {
-//       if (response.data.success) {
-//         localStorage.setItem("accessToken", response.headers["authorization"]);
-//         localStorage.setItem("refreshToken", response.headers["refresh-token"]);
-//         navigate("/");
-//       } else if (response.status !== 200) {
-//         alert("서버와 연결에 실패했습니다.");
-//       } else {
-//         alert("이메일과 비밀번호를 확인해주세요.");
-//       }
-//     });
-// };
-
 const usersSlice = createSlice({
   name: "users",
   initialState,

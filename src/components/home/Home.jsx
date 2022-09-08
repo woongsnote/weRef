@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 
 import "./HomeStyle.css";
 import Header from "../header/Header";
-import HomeCrad from "../homeCard/HomeCrad";
+import HomeCard from "../homeCard/HomeCard";
 
 import { Button } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
@@ -12,7 +12,9 @@ import { useDispatch, useSelector } from "react-redux";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 
-import { getPosts } from "../../redux/modules/post";
+import axios from "axios";
+import { getPosts } from "../../redux/modules/posts";
+
 
 import { accessToken } from "../../utils/tokens";
 
@@ -24,8 +26,10 @@ export default function Home() {
     dispatch(getPosts());
   }, [dispatch]);
 
+
   const data = useSelector((state) => state.post.posts);
   const newData = [...data];
+
 
   const [loginCheck, setLoginCheck] = useState(true);
 
@@ -59,8 +63,11 @@ export default function Home() {
           id="cardLayout"
           columnSpacing={{ md: -20 }}
         >
+
+
           {newData.map((item) => (
-            <HomeCrad
+            <HomeCard
+
               key={item.id}
               id={item.id}
               title={item.title}
