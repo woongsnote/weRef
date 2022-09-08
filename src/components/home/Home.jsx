@@ -16,12 +16,14 @@ import { getPosts } from "../../redux/modules/post";
 
 import { accessToken } from "../../utils/tokens";
 
+
 export default function Home() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getPosts());
+
   }, [dispatch]);
 
   const data = useSelector((state) => state.post.posts);
@@ -51,7 +53,7 @@ export default function Home() {
           글쓰기
         </Button>
       </div>
-      <Box sx={{ flexGrow: 2 }}>
+      <Box sx={{ flexGrow: 2 }} className="cardBoxLayout">
         <Grid
           container
           spacing={8}

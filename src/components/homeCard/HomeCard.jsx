@@ -15,33 +15,44 @@ import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { useDispatch, useSelector } from "react-redux";
-import { updateHeart, addDelHeart,heartCheck } from "../../redux/modules/heart";
+import { addDelHeart,heartCheck } from "../../redux/modules/heart";
 
 
 import { useEffect } from "react";
 
 import { accessToken } from "../../utils/tokens";
 
+
+// id/cntHeart props 필요
 const LikeIcon = (props) => {
   const dispatch = useDispatch();
 
   const [liked, setLiked] = useState(false);
   const [likeNum, setLikeNum] = useState(0);
-  const [loginCheck, setLoginCheck] = useState(true);
-
-  const data = useSelector((state) => state.posts.posts);
-  const newData = [...data].filter((item) => item.id === props.id)[0];
+  const [loginCheck, setLoginCheck] = useState(false);
   
-  const heartData = useSelector((state)=>state.heart)
-  
-
+  const heartData = useSelector((state)=>state.heart.hearts)
   useEffect(() => {
-    setLikeNum(newData.cntHeart);
+    setLikeNum(props.cntHeart);
     accessToken() === undefined ? setLoginCheck(false) : setLoginCheck(true);
-    dispatch(heartCheck(newData.id))
+    dispatch(heartCheck(props.id))
+    
   }, []);
+  console.log(heartData)
+  
 
-  // console.log(heartData)
+
+   
+      
+      
+
+  
+  // const data = useSelector((state) => state.post.posts);
+  // const newData = [...data].filter((item) => item.id === props.id)[0];
+  
+
+  
+
 
   const btnPush = () => {
     // let putData = {
@@ -58,7 +69,7 @@ const LikeIcon = (props) => {
     // };
     let postHeart = {
       userId: "userId",
-      id: newData.id,
+      id: props.id,
     };
 
     if (loginCheck === false) {
@@ -110,7 +121,7 @@ export default function HomeCard(props) {
   return (
     <Grid item xs={4}>
       <Card sx={{ maxWidth: 300 }} id="goDetail">
-        <div onClick={goDetail}>
+        <div onClick={goDetail} id="cardSize">
           <CardHeader
             // avatar={<Avatar sx={{ bgcolor: red[10] }} src="img" />}
             title={props.author}

@@ -1,7 +1,7 @@
 import AddPostStyle from "./AddPostStyle.css";
 import React from "react";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import Header from "../header/Header";
@@ -71,6 +71,12 @@ const AddLinks = () => {
 };
 
 export default function AddPost() {
+  const useForceUpdate=()=>{
+    const [value, setValue] = useState(0);
+    return () => setValue(value => ++value);
+  }
+  const forceUpdate = useForceUpdate()
+  
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -150,7 +156,7 @@ export default function AddPost() {
       };
       axios(apiPost);
 
-      dispatch(getPosts());
+      forceUpdate()
       navigate("/");
     }
   };

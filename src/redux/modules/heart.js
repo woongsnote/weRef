@@ -133,7 +133,7 @@ export const heartSlice = createSlice({
     /* Fulfilled */
     [heartCheck.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.hearts = state.hearts.filter((item) => item.id !== action.payload);
+      state.hearts = action.payload;
     },
     [addDelHeart.fulfilled]: (state, action) => {
       state.isLoading = false;
