@@ -88,6 +88,14 @@ const AddLinks = () => {
 };
 
 export default function EditPost() {
+  const useForceUpdate=()=>{
+    const [value, setValue] = useState(0);
+    return () => setValue(value => ++value);
+  }
+  const forceUpdate = useForceUpdate()
+  
+
+
   const navigate = useNavigate();
   const param = useParams();
   const dispatch = useDispatch();
@@ -108,7 +116,8 @@ export default function EditPost() {
 
   useEffect(() => {
     dispatch(getPosts());
-  }, []);
+  }, [dispatch]);
+
 
   const titleHandle = (e) => {
     setTitle(e.target.value);
@@ -185,9 +194,9 @@ export default function EditPost() {
       };
       axios(apiPost);
 
-      dispatch(getPosts());
-      navigate("/");
     }
+    forceUpdate()
+    navigate("/");
   };
 
   const goBack = () => {
