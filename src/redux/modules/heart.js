@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { accessToken, refreshToken } from "../../utils/tokens";
 
 /* InitialState */
 // data, isLoading, error로 상태관리
@@ -9,39 +10,75 @@ const initialState = {
   error: null,
 };
 
-
-const baseURL = "http://localhost:3001/data"
-const baseHeartURL = "http://localhost:3001/api/auth/heart/"
+const baseURL = "http://13.125.246.47:8080/data";
+const baseHeartURL = "http://13.125.246.47:8080/api/auth/heart";
 //   'http://localhost:3001/heart/${postId}' delete URL
 /* Thunk function */
 
 
+
+
+export const heartCheck = createAsyncThunk(
+  "GET_HEART_CHECK",
+  async (payload, thunkAPI) => {
+    try {
+      const { data } = await axios({
+        url: `${baseHeartURL}/${payload}`,
+        method: "GET",
+        headers: {
+          "Content-Type": "applycation/json",
+          "Authorization": accessToken(),
+          "Refresh-Token": refreshToken(),
+        },
+        withCredentials: true,
+      });
+      console.log(data);
+      return thunkAPI.fulfillWithValue(data);
+    } catch (errer) {
+      return thunkAPI.rejectWithValue(errer);
+    }
+  }
+);
+
 // [POST]
-export const addHeart = createAsyncThunk(
+export const addDelHeart = createAsyncThunk(
   "POST_HEART",
   async (payload, thunkAPI) => {
     try {
-      const {data} = await axios.post(
-        `${baseHeartURL}`,
-            payload
-      );
-      console.log('data',data);
-      return thunkAPI.fulfillWithValue(data)
+      const { data } = await axios({
+        url: `${baseHeartURL}/${payload.id}`,
+        method: "POST",
+        headers: {
+          "Content-Type": "applycation/json",
+          "Authorization": accessToken(),
+          "Refresh-Token": refreshToken(),
+        },
+        withCredentials: true,
+      });
+      console.log("data", data);
+      return thunkAPI.fulfillWithValue(data);
     } catch (errer) {
-      return thunkAPI.rejectWithValue(errer)
+      return thunkAPI.rejectWithValue(errer);
     }
   }
-)
+);
 
 // [UPDATE]
 export const updateHeart = createAsyncThunk(
   "UPDATAE_HEART",
   async (payload, thunkAPI) => {
     try {
-      const response = await axios.put(
-        `${baseHeartURL}/${payload.id}`,
-        payload.cntHeart
-      );
+      const response = await axios({
+        url: `${baseHeartURL}`,
+        method: "PUT",
+        data: payload,
+        headers: {
+          "Content-Type": "multipart/form-data",
+          "Authorization": accessToken(),
+          "Refresh-Token": refreshToken(),
+        },
+        withCredentials: true,
+      });
       console.log("response", response);
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
@@ -55,14 +92,22 @@ export const deleteHeart = createAsyncThunk(
   "DELETE_HEART",
   async (payload, thunkAPI) => {
     try {
-      await axios.delete(`${baseHeartURL}/${payload}`);
+      await axios({
+        url: `${baseHeartURL}/${payload.id}`,
+        method: "DELETE",
+        headers: {
+          "Content-Type": "applycation/json",
+          Authorization: accessToken(),
+          "Refresh-Token": refreshToken(),
+        },
+        withCredentials: true,
+      });
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
-
 
 /* createSlice */
 export const heartSlice = createSlice({
@@ -75,16 +120,22 @@ export const heartSlice = createSlice({
   //extraReducers
   extraReducers: {
     /* Pending */
-    [addHeart.pending]: (state, action) => {
+    [heartCheck.pending]: (state, action) => {
+      state.isLoading = true;
+    },
+    [addDelHeart.pending]: (state, action) => {
       state.isLoading = true;
     },
     [deleteHeart.pending]: (state, action) => {
       state.isLoading = true;
     },
 
-    
     /* Fulfilled */
-    [addHeart.fulfilled]: (state, action) => {
+    [heartCheck.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.hearts = state.hearts.filter((item) => item.id !== action.payload);
+    },
+    [addDelHeart.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.hearts = state.hearts.filter((item) => item.id !== action.payload);
     },
@@ -102,7 +153,11 @@ export const heartSlice = createSlice({
     },
     /* Rejected */
 
-    [addHeart.rejected]: (state, action) => {
+    [heartCheck.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    [addDelHeart.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },
