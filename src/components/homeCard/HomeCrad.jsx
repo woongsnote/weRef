@@ -15,7 +15,8 @@ import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { useDispatch, useSelector } from "react-redux";
-import { updateHeart, addHeart, deleteHeart } from "../../redux/modules/heart";
+import { updateHeart, addDelHeart,heartCheck } from "../../redux/modules/heart";
+
 
 import { useEffect } from "react";
 
@@ -30,25 +31,31 @@ const LikeIcon = (props) => {
 
   const data = useSelector((state) => state.post.posts);
   const newData = [...data].filter((item) => item.id === props.id)[0];
+  
+  const heartData = useSelector((state)=>state.heart)
+  
 
   useEffect(() => {
     setLikeNum(newData.cntHeart);
     accessToken() === undefined ? setLoginCheck(false) : setLoginCheck(true);
+    dispatch(heartCheck(newData.id))
   }, []);
 
+  // console.log(heartData)
+
   const btnPush = () => {
-    let putData = {
-      userId: newData.userId,
-      title: newData.title,
-      description: newData.description,
-      author: newData.author,
-      imgUrl: newData.imgUrl,
-      createAt: newData.createAt,
-      modifiedAt: newData.modifiedAt,
-      refUrl: newData.referenceList,
-      cntHeart: likeNum,
-      id: newData.id,
-    };
+    // let putData = {
+    //   userId: newData.userId,
+    //   title: newData.title,
+    //   description: newData.description,
+    //   author: newData.author,
+    //   imgUrl: newData.imgUrl,
+    //   createAt: newData.createAt,
+    //   modifiedAt: newData.modifiedAt,
+    //   refUrl: newData.referenceList,
+    //   cntHeart: likeNum,
+    //   id: newData.id,
+    // };
     let postHeart = {
       userId: "userId",
       id: newData.id,
@@ -60,15 +67,15 @@ const LikeIcon = (props) => {
       if (liked === false) {
         setLiked(true);
         setLikeNum(likeNum + 1);
-        putData.cntHeart = likeNum + 1;
-        dispatch(updateHeart(putData));
-        dispatch(addHeart(postHeart));
+        // putData.cntHeart = likeNum + 1;
+        // dispatch(updateHeart(putData));
+        dispatch(addDelHeart(postHeart));
       } else {
         setLiked(false);
         setLikeNum(likeNum - 1);
-        putData.cntHeart = likeNum - 1;
-        dispatch(updateHeart(putData));
-        dispatch(deleteHeart(postHeart));
+        // putData.cntHeart = likeNum - 1;
+        // dispatch(updateHeart(putData));
+        dispatch(addDelHeart(postHeart));
       }
     }
   };

@@ -16,7 +16,8 @@
   margin-left: auto;
   margin-right: auto;
 
-  width: 1400px;
+  max-width: 1400px;
+  min-width: 600px;
 }
 .writeBtn button {
   width: 100px;

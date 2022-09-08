@@ -109,19 +109,21 @@ export default function EditPost() {
 
   useEffect(() => {
     dispatch(getPosts());
-    return () => {
-      setTitle(editData.title);
-      setDescription(editData.description);
-      setImgUrl(editData.imgUrl);
-      setImgView(editData.imgUrl);
-    };
+    // return () => {
+    //   setTitle(editData.title);
+    //   setDescription(editData.description);
+    //   setImgUrl(editData.imgUrl);
+    //   setImgView(editData.imgUrl);
+    // };
   }, []);
 
   const titleHandle = (e) => {
     setTitle(e.target.value);
+    console.log(title)
   };
   const descriptionHandle = (e) => {
     setDescription(e.target.value);
+    console.log(description)
   };
 
   // 이미지 미리보기
@@ -233,7 +235,6 @@ export default function EditPost() {
             variant="outlined"
             inputProps={{ maxLength: 50 }}
             onChange={titleHandle}
-            defaultValue={title}
           />
           <br />
           <br />
@@ -242,7 +243,6 @@ export default function EditPost() {
             multiline
             inputProps={{ maxLength: 300 }}
             onChange={descriptionHandle}
-            defaultValue={description}
           />
         </div>
 

@@ -10,23 +10,47 @@ const initialState = {
   error: null,
 };
 
-const baseURL = "http://localhost:3001/data";
-const baseHeartURL = "http://localhost:3001/api/auth/heart/";
+const baseURL = "http://13.125.246.47:8080/data";
+const baseHeartURL = "http://13.125.246.47:8080/api/auth/heart";
 //   'http://localhost:3001/heart/${postId}' delete URL
 /* Thunk function */
 
+
+
+
+export const heartCheck = createAsyncThunk(
+  "GET_HEART_CHECK",
+  async (payload, thunkAPI) => {
+    try {
+      const { data } = await axios({
+        url: `${baseHeartURL}/${payload}`,
+        method: "GET",
+        headers: {
+          "Content-Type": "applycation/json",
+          "Authorization": accessToken(),
+          "Refresh-Token": refreshToken(),
+        },
+        withCredentials: true,
+      });
+      console.log(data);
+      return thunkAPI.fulfillWithValue(data);
+    } catch (errer) {
+      return thunkAPI.rejectWithValue(errer);
+    }
+  }
+);
+
 // [POST]
-export const addHeart = createAsyncThunk(
+export const addDelHeart = createAsyncThunk(
   "POST_HEART",
   async (payload, thunkAPI) => {
     try {
       const { data } = await axios({
-        url: `${baseHeartURL}${payload.id}`,
+        url: `${baseHeartURL}/${payload.id}`,
         method: "POST",
-        data: payload,
         headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: accessToken(),
+          "Content-Type": "applycation/json",
+          "Authorization": accessToken(),
           "Refresh-Token": refreshToken(),
         },
         withCredentials: true,
@@ -45,12 +69,12 @@ export const updateHeart = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const response = await axios({
-        url: `${baseHeartURL}${payload.id}`,
+        url: `${baseHeartURL}`,
         method: "PUT",
         data: payload,
         headers: {
           "Content-Type": "multipart/form-data",
-          Authorization: accessToken(),
+          "Authorization": accessToken(),
           "Refresh-Token": refreshToken(),
         },
         withCredentials: true,
@@ -69,11 +93,10 @@ export const deleteHeart = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       await axios({
-        url: `${baseHeartURL}${payload.id}`,
+        url: `${baseHeartURL}/${payload.id}`,
         method: "DELETE",
-        data: payload,
         headers: {
-          "Content-Type": "multipart/form-data",
+          "Content-Type": "applycation/json",
           Authorization: accessToken(),
           "Refresh-Token": refreshToken(),
         },
@@ -97,7 +120,10 @@ export const heartSlice = createSlice({
   //extraReducers
   extraReducers: {
     /* Pending */
-    [addHeart.pending]: (state, action) => {
+    [heartCheck.pending]: (state, action) => {
+      state.isLoading = true;
+    },
+    [addDelHeart.pending]: (state, action) => {
       state.isLoading = true;
     },
     [deleteHeart.pending]: (state, action) => {
@@ -105,7 +131,11 @@ export const heartSlice = createSlice({
     },
 
     /* Fulfilled */
-    [addHeart.fulfilled]: (state, action) => {
+    [heartCheck.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.hearts = state.hearts.filter((item) => item.id !== action.payload);
+    },
+    [addDelHeart.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.hearts = state.hearts.filter((item) => item.id !== action.payload);
     },
@@ -123,7 +153,11 @@ export const heartSlice = createSlice({
     },
     /* Rejected */
 
-    [addHeart.rejected]: (state, action) => {
+    [heartCheck.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    [addDelHeart.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },

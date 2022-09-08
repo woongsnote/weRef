@@ -12,10 +12,9 @@ import { useDispatch, useSelector } from "react-redux";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 
-import axios from "axios";
 import { getPosts } from "../../redux/modules/post";
 
-import { accessToken, refreshToken } from "../../utils/tokens";
+import { accessToken } from "../../utils/tokens";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -69,7 +68,6 @@ export default function Home() {
               author={item.author}
               imgUrl={item.imgUrl}
               cntHeart={item.cntHeart}
-              referenceList={item.referenceList}
               createAt={item.createAt}
             />
           ))}

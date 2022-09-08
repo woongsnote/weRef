@@ -55,15 +55,6 @@ export const postPosts = createAsyncThunk(
       const {data} = await axios.post(
         `${teamBaseLogedURL}`,payload
       );
-      // 토큰 테스트 후 리팩토링 예정
-      // const {data}= axios(
-      //   url: `${teamBaseLogedURL}`,
-      //   method: "POST",
-      //   data: payload,
-      //   headers:{
-      //   },
-      //   withCredentials: true,
-      // )
       console.log('data',data);
       return thunkAPI.fulfillWithValue(data)
     } catch (errer) {

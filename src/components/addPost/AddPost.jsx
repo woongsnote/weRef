@@ -1,10 +1,10 @@
+import AddPostStyle from "./AddPostStyle.css";
 import React from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import Header from "../header/Header";
-import AddPostStyle from "./AddPostStyle.css";
 
 import axios from "axios";
 import { postPosts } from "../../redux/modules/post";
@@ -13,7 +13,7 @@ import { getPosts } from "../../redux/modules/post";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import CloseIcon from "@mui/icons-material/Close";
-import { AltRoute } from "@mui/icons-material";
+
 
 import { accessToken, refreshToken } from "../../utils/tokens";
 
