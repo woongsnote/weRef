@@ -105,14 +105,6 @@ export const commentsSlice = createSlice({
     },
     [deleteComment.fulfilled]: (state, action) => {
       state.isLoading = false;
-      const newState = state.commentList.map((comment) =>
-        action.payload.id === comment.id
-          ? { ...comment, body: action.payload.body }
-          : comment
-      );
-
-      state.commentList = newState;
-      return newState;
     },
     [deleteComment.rejected]: (state, action) => {
       state.isLoading = false;

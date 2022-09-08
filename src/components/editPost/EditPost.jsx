@@ -84,7 +84,7 @@ export default function EditPost() {
   const [imgUrl, setImgUrl] = useState([]);
   const [getRef, setGetRef] = useState([]);
 
-  const data = useSelector((state) => state.post.posts);
+  const data = useSelector((state) => state.post.post);
   const editData = [...data].filter((item) => item.id === parseInt(param.id));
 
   // Detail=> props 처리 예정

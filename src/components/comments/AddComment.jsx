@@ -80,7 +80,7 @@ const AddComment = ({ currentUserId, postId }) => {
         <Box sx={{ display: "flex", flexDirection: "row", flex: 1 }}>
           <Avatar sx={{ margin: "1rem" }} />
           <Box sx={{ flex: 10, padding: "1rem" }}>
-            <Typography fontWeight="bold">{currentUserId}</Typography>
+            {/* <Typography fontWeight="bold">{currentUserId}</Typography> */}
             <Input
               id="commentInput"
               onChange={onChangeCommentHandler}

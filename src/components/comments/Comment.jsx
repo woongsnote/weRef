@@ -29,10 +29,10 @@ const Comment = ({ author, comment, currentUserId, id, postId }) => {
   const onDelete = (id) => {
     // dispatch(deleteComment(_id));
     const apiPost = {
-      url: `http://13.125.246.47:8080/api/auth/comment/${postId}/${id}`,
+      url: `http://13.125.246.47:8080/api/auth/comment/delete/${id}`,
       method: "DELETE",
       headers: {
-        // "Content-Type": "application/json",
+        "Content-Type": "application/json",
         Authorization: window.localStorage.accessToken,
         "Refresh-Token": window.localStorage.refreshToken,
       },
@@ -40,6 +40,7 @@ const Comment = ({ author, comment, currentUserId, id, postId }) => {
     };
     console.log(apiPost);
     axios(apiPost);
+    // setTimeout(() => {}, 1000);
   };
 
   /** 댓글 수정 */

@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 
-import axios from "axios";
+// import axios from "axios";
 import { getPosts } from "../../redux/modules/posts";
 
 export default function Home() {
