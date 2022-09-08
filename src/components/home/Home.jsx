@@ -15,6 +15,7 @@ import Grid from "@mui/material/Grid";
 import { getPosts } from "../../redux/modules/post";
 
 import { accessToken } from "../../utils/tokens";
+import Layout from "../layout/Layout";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -33,8 +34,6 @@ export default function Home() {
     accessToken() === undefined ? setLoginCheck(false) : setLoginCheck(true);
   }, [loginCheck]);
 
-  
-
   const goAddPost = () => {
     loginCheck === true ? navigate("/addPost") : alert("로그인 해주세요!");
   };
@@ -42,37 +41,39 @@ export default function Home() {
   return (
     <>
       <Header />
-      <div className="greeting">
-        <h1>WEREF!</h1>
-        <p>오늘은 무엇을 배웠나요?</p>
-      </div>
-      <div className="writeBtn">
-        <Button variant="contained" onClick={goAddPost}>
-          글쓰기
-        </Button>
-      </div>
-      <Box sx={{ flexGrow: 2 }}>
-        <Grid
-          container
-          spacing={8}
-          columns={16}
-          id="cardLayout"
-          columnSpacing={{ md: -20 }}
-        >
-          {newData.map((item) => (
-            <HomeCard
-              key={item.id}
-              id={item.id}
-              title={item.title}
-              description={item.description}
-              author={item.author}
-              imgUrl={item.imgUrl}
-              cntHeart={item.cntHeart}
-              createAt={item.createAt}
-            />
-          ))}
-        </Grid>
-      </Box>
+      <Layout>
+        <div className="greeting">
+          <h1>WEREF!</h1>
+          <p>오늘은 무엇을 배웠나요?</p>
+        </div>
+        <div className="writeBtn">
+          <Button variant="contained" onClick={goAddPost}>
+            글쓰기
+          </Button>
+        </div>
+        <Box sx={{ flexGrow: 2 }}>
+          <Grid
+            container
+            spacing={8}
+            columns={16}
+            id="cardLayout"
+            columnSpacing={{ md: -20 }}
+          >
+            {newData.map((item) => (
+              <HomeCard
+                key={item.id}
+                id={item.id}
+                title={item.title}
+                description={item.description}
+                author={item.author}
+                imgUrl={item.imgUrl}
+                cntHeart={item.cntHeart}
+                createAt={item.createAt}
+              />
+            ))}
+          </Grid>
+        </Box>
+      </Layout>
     </>
   );
 }

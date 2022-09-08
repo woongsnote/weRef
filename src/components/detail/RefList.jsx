@@ -1,4 +1,3 @@
-/** 레퍼런스 링크 리스트 */
 import { Box, Link, styled, Paper } from "@mui/material";
 
 const RefList = ({ links }) => {
